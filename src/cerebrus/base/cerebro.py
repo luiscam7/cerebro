@@ -1,5 +1,6 @@
-from typing import Any
 import abc
+from typing import Any
+from mne.io import Raw
 
 
 class Cerebro(abc.ABC):
@@ -9,7 +10,7 @@ class Cerebro(abc.ABC):
     """
 
     @abc.abstractmethod
-    def load_data(self, filepath: str) -> None:
+    def load_data(self, filepath: str) -> Raw:
         """
         Load data from a file.
         :param filepath: Path to the file.
@@ -17,7 +18,7 @@ class Cerebro(abc.ABC):
         pass
 
     @abc.abstractmethod
-    def preprocess_data(self, **kwargs: Any) -> None:
+    def preprocess_data(self, **kwargs: Any) -> Raw:
         """
         Preprocess the loaded data.
         :param kwargs: Additional arguments for preprocessing.
@@ -25,7 +26,7 @@ class Cerebro(abc.ABC):
         pass
 
     @abc.abstractmethod
-    def analyze_data(self) -> None:
+    def analyze_data(self) -> Raw:
         """
         Analyze the preprocessed data.
         """
@@ -34,14 +35,14 @@ class Cerebro(abc.ABC):
 
 # Example of a concrete implementation
 class ConcreteCerebro(Cerebro):
-    def load_data(self, filepath: str) -> None:
+    def load_data(self, filepath: str) -> Raw:
         # Implementation for loading data
         pass
 
-    def preprocess_data(self, **kwargs: Any) -> None:
+    def preprocess_data(self, **kwargs: Any) -> Raw:
         # Implementation for preprocessing data
         pass
 
-    def analyze_data(self) -> None:
+    def analyze_data(self) -> Raw:
         # Implementation for data analysis
         pass

@@ -1,18 +1,35 @@
 import mne
+from mne.io import Raw
+from cerebrus.base.parser import Parser
 
-def read_eeg_data(filepath: str):
+
+class EdfParser(Parser):
     """
-    Reads an EDF file and extracts channels according to the 10-20 system.
-
-    :param filepath: Path to the EDF file.
-    :return: Raw data object containing only the 10-20 system channels.
+    Class for parsing EEG data from EDF files using MNE.
     """
 
-    # Define the 10-20 system channels
-    channels_10_20 = ["Fp1", "Fp2", "F3", "F4", "C3", "C4", "P3", "P4", "O1", "O2", 
-                      "F7", "F8", "T3", "T4", "T5", "T6", "Fz", "Cz", "Pz"]
+    def read_eeg(self, filepath: str) -> Raw:
+        """
+        Load EEG data from an EDF file.
+        :param filepath: Path to the EDF file
+        """
+        raw = mne.io.read_raw_edf(filepath, preload=True)
+        self.reconfigure_eeg_channels(raw)
+        return self.load_eeg(raw)
 
-    # Load the EDF file
-    raw = mne.io.read_raw_edf(filepath, preload=True)
+    def load_eeg(self, raw: Raw) -> Raw:
+        """
+        Apply the standard 10-20 montage to the raw EEG data.
+        :param raw: Raw EEG data
+        """
+        montage = mne.channels.make_standard_montage("standard_1020")
+        raw.set_montage(montage)
+        return raw
 
-    return raw
+    def reconfigure_eeg_channels(self, raw: Raw) -> Raw:
+        """
+        Default implementation of reconfiguring EEG channels.
+        This can be overridden in subclasses for specific behavior.
+        :param raw: Raw EEG data
+        """
+        return raw
