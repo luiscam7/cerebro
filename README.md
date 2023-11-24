@@ -31,12 +31,16 @@ This project aims to develop a comprehensive toolkit for parsing, analyzing, and
 
 #Changelog
 
-## [0.2.0] - 2023-11-22
+## [0.3.0] - 2023-11-23
+### Added
+- Temple University EEG Corpus Edf parser.
+
+
+## [0.2.0] - 2023-11-23
 ### Added
 - Created EdfParser base class.
 - Developed CHBMP parser that inherits from the EdfParser class and reconfigures the Cuban Human Brain Mapping Project's 10-10 system to 10-20.
 - Added notebook folder for exploratory data analysis.
-
 
 
 
