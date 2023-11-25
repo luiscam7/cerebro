@@ -1,5 +1,8 @@
 # Cerebro AI & Analytics Platform Project
 ![Alternative Text](https://images.theconversation.com/files/374303/original/file-20201210-18-elk4m.jpg?ixlib=rb-1.1.0&rect=0%2C22%2C7500%2C5591&q=45&auto=format&w=926&fit=clip)
+
+[![Cerebrus Project CI](https://github.com/luiscam7/cerebrus/actions/workflows/continuous_improvement.yml/badge.svg)](https://github.com/luiscam7/cerebrus/actions/workflows/continuous_improvement.yml)
+
 ## Overview
 This project aims to develop a comprehensive toolkit for parsing, analyzing, and modeling EEG data from various neurological and physiological datasets. The primary goal is to facilitate advanced EEG data analysis and develop machine learning models for seizure detection.
 
