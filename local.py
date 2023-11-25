@@ -9,7 +9,7 @@ def select_file_and_process():
 
     file_path = filedialog.askopenfilename(
         title="Select EEG Data File",
-        filetypes=[("All files", "*.*")]
+        #filetypes=[("All files", "*.*")]
     )
 
     if not file_path:
