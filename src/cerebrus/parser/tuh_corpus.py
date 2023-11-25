@@ -1,9 +1,9 @@
-from cerebrus.parser.edf import EdfParser
+from cerebrus.parser import EdfParser
 from mne.io import Raw
 from cerebrus.utils.params import CHANNELS_10_20
 
 
-class TUH(EdfParser):
+class TuhParser(EdfParser):
     def read_eeg(self, filepath: str) -> Raw:
         """
         Reads an EDF file and extracts channels according to the 10-20 system.

@@ -31,10 +31,21 @@ This project aims to develop a comprehensive toolkit for parsing, analyzing, and
 
 #Changelog
 
+## [0.6.0] - 2023-11-25
+### Added
+- Parser for TDBrain dataset's Brainvision eeg files.
+- Local script for quick testing.
+
+### Changed
+- Upgrade to Python 3.10.
+- Import statements for Cerebro and various EEG parsers.
+- Renamed all Parser classes.
+- Ruff ignores F401 errors; ignore unused imports across all init scripts.
+
+
 ## [0.5.0] - 2023-11-24
 ### Added
 - Added Github actions workflow for linting, formatting, and testing.
-
 
 
 ## [0.4.0] - 2023-11-24
@@ -56,7 +67,6 @@ This project aims to develop a comprehensive toolkit for parsing, analyzing, and
 - Created EdfParser base class.
 - Developed CHBMP parser that inherits from the EdfParser class and reconfigures the Cuban Human Brain Mapping Project's 10-10 system to 10-20.
 - Added notebook folder for exploratory data analysis.
-
 
 
 ## [0.1.0] - 2023-11-22

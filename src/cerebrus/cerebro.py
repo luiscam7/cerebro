@@ -8,8 +8,8 @@ accelerating the transition from raw data to insightful neurological interpretat
 """
 
 from mne.io import Raw
-from cerebrus.base.cerebro import ICerebro
-from cerebrus.parser import chbmp, tuh_corpus
+from cerebrus.base import ICerebro
+from cerebrus.parser import ChbmpParser, TuhParser, TdbrainParser
 from cerebrus.preprocessing import (
     eeg_filter,
     remove_powerline_noise,
@@ -29,6 +29,7 @@ class Cerebro(ICerebro):
         self.raw_data = None
         self.filt_data = None
         self.data = None
+        self.analysis = {}
 
     def load_data(self, filepath: str, source: str = "tuh") -> Raw:
         """
@@ -38,9 +39,11 @@ class Cerebro(ICerebro):
         """
 
         if source == "chbmp":
-            parser = chbmp.CHBMP()
+            parser = ChbmpParser()
         elif source == "tuh":
-            parser = tuh_corpus.TUH()
+            parser = TuhParser()
+        elif source == "tdbrain":
+            parser = TdbrainParser()
         else:
             raise KeyError("Cerebro does not currently support EEG from data source.")
 
@@ -77,6 +80,4 @@ class Cerebro(ICerebro):
         if self.filt_data:
             self.data = self.filt_data
 
-        psd_dict, psd, freqs = calculate_psd(self.data)
-
-        return psd_dict
+        return self.analysis

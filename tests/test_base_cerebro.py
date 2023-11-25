@@ -1,5 +1,5 @@
 import unittest
-from cerebrus.base.cerebro import ICerebro
+from cerebrus.base import ICerebro
 from typing import Any, Dict
 from mne.io import Raw
 

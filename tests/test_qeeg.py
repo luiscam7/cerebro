@@ -2,7 +2,7 @@ import mne
 import numpy as np
 from cerebrus.qeeg import (
     calculate_psd,
-)  # Replace 'your_module_name' with the actual name of your module
+)
 
 
 def create_test_raw_data(n_channels=19, n_samples=10000, sfreq=200):
