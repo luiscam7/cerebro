@@ -1,4 +1,4 @@
-name: Cerebrus Project CI
+name: Lint, Format, Testing
 
 on:
   push:
