@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "cerebrus"
-version = "0.4.0"
+version = "0.5.0"
 description = "A library for analyzing and visualizing neurological data for the development of Brain computer interfaces and AI-driven application development."
 authors = ["Luis Camargo <lcamargo2007@gmail.com>"]
 readme = "README.md"

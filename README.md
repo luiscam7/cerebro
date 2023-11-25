@@ -31,6 +31,12 @@ This project aims to develop a comprehensive toolkit for parsing, analyzing, and
 
 #Changelog
 
+## [0.5.0] - 2023-11-24
+### Added
+- Added Github actions workflow for linting, formatting, and testing.
+
+
+
 ## [0.4.0] - 2023-11-24
 ### Added
 - Development of a concrete Cerebro class.
