@@ -31,6 +31,15 @@ This project aims to develop a comprehensive toolkit for parsing, analyzing, and
 
 #Changelog
 
+## [0.4.0] - 2023-11-24
+### Added
+- Development of a concrete Cerebro class.
+- Preprocessing module includes bandpass filter, automatic detection and removal of powerline noise and ecg interfernece.
+- Added function to compute power spectral density.
+- Expanded params; set default sampling rate to 200 Hz for all eeg processing, set high threshold for ECG contamination.
+- Added unit tests for preprocessing, base models, parsing, parameters in Pytest.
+
+
 ## [0.3.0] - 2023-11-23
 ### Added
 - Temple University EEG Corpus Edf parser.

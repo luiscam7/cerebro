@@ -1,4 +1,4 @@
-from edf import EdfParser
+from cerebrus.parser.edf import EdfParser
 from mne.io import Raw
 from cerebrus.utils.params import (
     CHANNELS_10_20,

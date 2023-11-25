@@ -1,9 +1,9 @@
 import abc
-from typing import Any
+from typing import Any, Dict
 from mne.io import Raw
 
 
-class Cerebro(abc.ABC):
+class ICerebro(abc.ABC):
     """
     Abstract base class for objects that interact with MNE for
     neurological data analysis and visualization.
@@ -26,23 +26,8 @@ class Cerebro(abc.ABC):
         pass
 
     @abc.abstractmethod
-    def analyze_data(self) -> Raw:
+    def analyze_data(self) -> Dict:
         """
         Analyze the preprocessed data.
         """
-        pass
-
-
-# Example of a concrete implementation
-class ConcreteCerebro(Cerebro):
-    def load_data(self, filepath: str) -> Raw:
-        # Implementation for loading data
-        pass
-
-    def preprocess_data(self, **kwargs: Any) -> Raw:
-        # Implementation for preprocessing data
-        pass
-
-    def analyze_data(self) -> Raw:
-        # Implementation for data analysis
         pass

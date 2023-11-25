@@ -1,4 +1,12 @@
-"""Organize all of the variables that correspond to constants and configurations across the module"""
+"""Organize all of the variables that correspond to constants and configurations across the project."""
+
+# Configuration constants
+
+# Default sampling rate is set to 200 to standardize analyze across different EEG sources with variable sampling rates.
+DEFAULT_SAMPLING_RATE = 200
+
+# Set ECG interference threshold (0 to 1). A value near 1 implies a higher likelihood of ECG interference. This threshold guides ICA removal of ECG artifacts. Higher values decrease the risk of incorrect ICA application.
+ECG_ARTIFACT_ICA_DETECTION_THRESHOLD = 0.75
 
 # List the 19 channels that correspond to the 10-20 system.
 
