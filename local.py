@@ -1,15 +1,11 @@
-import tkinter as tk
 import matplotlib.pyplot as plt
 from tkinter import filedialog
 from cerebrus.cerebro import Cerebro  
 
 def select_file_and_process():
-    root = tk.Tk()
-    root.withdraw()  # Hide the main window
 
     file_path = filedialog.askopenfilename(
         title="Select EEG Data File",
-        #filetypes=[("All files", "*.*")]
     )
 
     if not file_path:

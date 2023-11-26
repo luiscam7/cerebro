@@ -111,5 +111,5 @@ def remove_ecg_interference(
         return raw_ica
 
     except Exception as e:
-        logging.error(f"An error occurred while removing ECG artifacts: {e}")
+        logging.error(f"An error occurred while removing ECG artifacts: {e} \nReturning original raw object.")
         return raw
