@@ -98,4 +98,7 @@ celerybeat.pid
 .ruff_cache
 
 # JSON stuff
-.json
+*.json
+
+# Mac stuff
+.DS_Store

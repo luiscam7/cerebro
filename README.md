@@ -35,6 +35,15 @@ This project aims to develop a comprehensive toolkit for parsing, analyzing, and
 
 #Changelog
 
+## [0.8.0] - 2023-11-26
+
+### Changed
+- Modified parameters around PSD calculation.
+- Captured data if ecg noise/powerline noise was detected or removed.
+- Made Cerebro a dataclass.
+- Added more logging statements  and error handling around preprocessing functions.
+
+
 ## [0.7.0] - 2023-11-26
 ### Added
 - Created PowerSpectralAnalysis class that inherits from Cerebro. 
@@ -46,8 +55,6 @@ This project aims to develop a comprehensive toolkit for parsing, analyzing, and
 
 ### Removed
 - Deleted test_qeeg, need to think of a better way to test new classes. 
-
-
 
 
 ## [0.6.0] - 2023-11-25

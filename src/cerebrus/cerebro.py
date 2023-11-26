@@ -6,7 +6,7 @@ various sources, providing essential functionalities for data loading, preproces
 Its modular design caters to the needs of EEG data analysts, researchers, and clinicians, 
 accelerating the transition from raw data to insightful neurological interpretations.
 """
-
+from dataclasses import dataclass
 from mne.io import Raw
 from cerebrus.base import ICerebro
 from cerebrus.parser import ChbmpParser, TuhParser, TdbrainParser
@@ -19,6 +19,7 @@ from cerebrus.utils.params import DEFAULT_SAMPLING_RATE
 from typing import Dict
 
 
+@dataclass
 class Cerebro(ICerebro):
     """
     Concrete class for interacting with MNE for neurological data analysis and visualization.
@@ -61,8 +62,8 @@ class Cerebro(ICerebro):
 
         self.raw_data.resample(sfreq=DEFAULT_SAMPLING_RATE)
         self.filt_data = eeg_filter(self.raw_data)
-        self.filt_data = remove_powerline_noise(self.filt_data)
-        self.filt_data = remove_ecg_interference(self.filt_data)
+        self.filt_data, self.analysis['powerline_noise_detected'] = remove_powerline_noise(self.filt_data)
+        self.filt_data, self.analysis['ecg_noise_detected'] = remove_ecg_interference(self.filt_data)
 
         return self.filt_data
 

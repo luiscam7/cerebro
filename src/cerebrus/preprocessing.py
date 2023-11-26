@@ -6,6 +6,7 @@ import logging
 import numpy as np
 from cerebrus.utils.params import ECG_ARTIFACT_ICA_DETECTION_THRESHOLD
 from mne.io import Raw
+from typing import Tuple
 from mne.preprocessing import ICA, create_ecg_epochs
 from scipy.integrate import simps
 
@@ -25,7 +26,7 @@ def eeg_filter(raw: Raw, l_freq: float = 1, h_freq: float = None) -> Raw:
     return filtered_raw
 
 
-def remove_powerline_noise(raw: Raw) -> Raw:
+def remove_powerline_noise(raw: Raw) -> Tuple[Raw, bool]:
     """
     Removes power line noise from EEG data using a notch filter if necessary.
 
@@ -34,38 +35,52 @@ def remove_powerline_noise(raw: Raw) -> Raw:
 
     Returns:
     Raw: The EEG data after potential notch filtering.
+    bool: Boolean regarding wether powerline noise was detected and removed.
     """
-    # Compute the power spectrum density (PSD) across all channels
-    spectrum = raw.compute_psd(method="welch", picks="eeg", fmin=4, fmax=100)
-    psd, freqs = spectrum.get_data(return_freqs=True)
+    try:
+        POWERLINE_NOISE_DETECTED_AND_REMOVED = False
 
-    # Average the PSD across channels
-    avg_psd = np.mean(psd, axis=0)
+        # Compute the power spectrum density (PSD) across all channels
+        spectrum = raw.compute_psd(method="welch", picks="eeg", fmin=4, fmax=100)
+        psd, freqs = spectrum.get_data(return_freqs=True)
 
-    # Define the frequency bins for 50 Hz and 60 Hz noise
-    f_bin_50 = (freqs >= 48) & (freqs <= 52)
-    f_bin_60 = (freqs >= 58) & (freqs <= 62)
+        # Average the PSD across channels
+        avg_psd = np.mean(psd, axis=0)
 
-    # Calculate the area under the curve using Simpson's rule
-    area_50 = simps(avg_psd[f_bin_50], dx=freqs[1] - freqs[0])
-    area_60 = simps(avg_psd[f_bin_60], dx=freqs[1] - freqs[0])
+        # Define the frequency bins for 50 Hz and 60 Hz noise
+        f_bin_50 = (freqs >= 48) & (freqs <= 52)
+        f_bin_60 = (freqs >= 58) & (freqs <= 62)
 
-    # Calculate the total area excluding the 50 Hz and 60 Hz bins
-    total_area = simps(avg_psd[~(f_bin_50 | f_bin_60)], dx=freqs[1] - freqs[0])
+        # Calculate the area under the curve using Simpson's rule
+        area_50 = simps(avg_psd[f_bin_50], dx=freqs[1] - freqs[0])
+        area_60 = simps(avg_psd[f_bin_60], dx=freqs[1] - freqs[0])
 
-    # Apply notch filters based on the energy in the specified bins
-    freqs_to_notch = []
-    if area_50 > total_area:
-        freqs_to_notch.append(50)
-    if area_60 > total_area:
-        freqs_to_notch.append(60)
+        # Calculate the total area excluding the 50 Hz and 60 Hz bins
+        total_area = simps(avg_psd[~(f_bin_50 | f_bin_60)], dx=freqs[1] - freqs[0])
 
-    if freqs_to_notch:
-        filtered_raw = raw.copy().notch_filter(freqs=freqs_to_notch)
-    else:
-        filtered_raw = raw.copy()
+        # Apply notch filters based on the energy in the specified bins
+        freqs_to_notch = []
+        if area_50 > total_area:
+            freqs_to_notch.append(50)
+        if area_60 > total_area:
+            freqs_to_notch.append(60)
 
-    return filtered_raw
+        if freqs_to_notch:
+            logging.info(
+                f"Powerline noise detected around frequencies {freqs_to_notch} Hz, notch filter will be applied."
+            )
+            filtered_raw = raw.copy().notch_filter(freqs=freqs_to_notch)
+            POWERLINE_NOISE_DETECTED_AND_REMOVED = True
+        else:
+            logging.info("No Powerline noise detected in the EEG.")
+            filtered_raw = raw.copy()
+
+        return filtered_raw, POWERLINE_NOISE_DETECTED_AND_REMOVED
+    except Exception as e:
+        logging.error(
+            f"An error occurred while removing powerline noise: {e} \nReturning original raw object."
+        )
+        return raw, POWERLINE_NOISE_DETECTED_AND_REMOVED
 
 
 def remove_ecg_interference(
@@ -74,7 +89,7 @@ def remove_ecg_interference(
     method: str = "fastica",
     random_state: int = 7,
     ecg_threshold: float = ECG_ARTIFACT_ICA_DETECTION_THRESHOLD,
-) -> Raw:
+) -> Tuple[Raw, bool]:
     """
     Detect and remove ECG interference from EEG data using ICA.
 
@@ -87,8 +102,10 @@ def remove_ecg_interference(
 
     Returns:
     Raw: The EEG data after ECG artifact removal.
+    bool: A boolean regarding wether ecg contamination was detected and removed with ICA.
     """
     try:
+        ECG_NOISE_DETECTED_AND_REMOVED = False
         # Filtering the data for ICA analysis
         filt_raw = raw.copy().filter(l_freq=1.0, h_freq=30, verbose="warning")
 
@@ -103,15 +120,19 @@ def remove_ecg_interference(
         )
         # If ECG components detected, remove them
         if ecg_inds:
+            logging.info(
+                "ECG components detected, electrocargiographic interference removed with ICA."
+            )
             ica.exclude.extend(ecg_inds)
             raw_ica = ica.apply(raw.copy())
+            ECG_NOISE_DETECTED_AND_REMOVED = True
         else:
             raw_ica = raw.copy()
 
-        return raw_ica
+        return raw_ica, ECG_NOISE_DETECTED_AND_REMOVED
 
     except Exception as e:
         logging.error(
             f"An error occurred while removing ECG artifacts: {e} \nReturning original raw object."
         )
-        return raw
+        return raw, ECG_NOISE_DETECTED_AND_REMOVED

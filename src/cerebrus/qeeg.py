@@ -6,6 +6,7 @@ from cerebrus.utils.params import (
     STABLE_FRONTAL_SENSORS,
     STABLE_CENTRAL_SENSORS,
     STABLE_POSTERIOR_SENSORS,
+    NYQUIT_LIMIT
 )
 
 from typing import Dict, List, Tuple, Any
@@ -30,7 +31,7 @@ class PowerSpectralAnalysis(Cerebro):
 
         # Calculate PSD
         self.spectrum = self.data.compute_psd(
-            method="welch", picks="eeg", fmin=0, fmax=100
+            method="welch", picks="eeg", fmin=0, fmax=NYQUIT_LIMIT, n_overlap=256, n_per_seg=512
         )
 
         # Store PSD data in pandas dataframe, make it easier to process and convert data
