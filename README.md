@@ -35,6 +35,21 @@ This project aims to develop a comprehensive toolkit for parsing, analyzing, and
 
 #Changelog
 
+## [0.7.0] - 2023-11-26
+### Added
+- Created PowerSpectralAnalysis class that inherits from Cerebro. 
+- Added new constants that defined EEG regions as a list of channels.
+- Add JSON files to gitignore.
+
+### Changed
+- Changed local.py to test new PowerSpectrumAnalysis class.
+
+### Removed
+- Deleted test_qeeg, need to think of a better way to test new classes. 
+
+
+
+
 ## [0.6.0] - 2023-11-25
 ### Added
 - Parser for TDBrain dataset's Brainvision eeg files.

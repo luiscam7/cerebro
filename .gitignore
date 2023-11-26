@@ -96,3 +96,6 @@ celerybeat.pid
 
 # Ruff stuff
 .ruff_cache
+
+# JSON stuff
+.json

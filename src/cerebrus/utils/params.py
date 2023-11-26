@@ -78,3 +78,14 @@ TDBRAIN_CHANNEL_MAPPING = {
     "Oz": "Oz",
     "O2": "O2",
 }
+
+# Assign sensors to regions in the EEG
+
+STABLE_FRONTAL_SENSORS = ["Fz", "F3", "F4"]
+STABLE_CENTRAL_SENSORS = ["Cz", "C3", "C4"]
+STABLE_POSTERIOR_SENSORS = ["Pz", "P3", "P4", "O1", "O2"]
+
+
+ALL_FRONTAL_SENSORS = ["Fz", "F3", "F4", "F7", "F8", "Fp1", "Fp2"]
+ALL_CENTRAL_SENSORS = ["Cz", "C3", "C4", "T3", "T4"]
+ALL_POSTERIOR_SENSORS = ["Pz", "P3", "P4", "O1", "O2"]

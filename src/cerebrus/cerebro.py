@@ -16,7 +16,6 @@ from cerebrus.preprocessing import (
     remove_ecg_interference,
 )
 from cerebrus.utils.params import DEFAULT_SAMPLING_RATE
-from cerebrus.qeeg import calculate_psd
 from typing import Dict
 
 
@@ -79,5 +78,3 @@ class Cerebro(ICerebro):
             self.data = self.raw_data
         if self.filt_data:
             self.data = self.filt_data
-
-        return self.analysis

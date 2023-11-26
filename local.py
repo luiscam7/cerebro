@@ -1,6 +1,6 @@
-import matplotlib.pyplot as plt
+import json
 from tkinter import filedialog
-from cerebrus.cerebro import Cerebro  
+from cerebrus.qeeg import PowerSpectralAnalysis  
 
 def select_file_and_process():
 
@@ -12,13 +12,15 @@ def select_file_and_process():
         print("No file selected.")
         return
 
-    cerebro = Cerebro()
+    cerebro = PowerSpectralAnalysis()
     cerebro.load_data(file_path, source='tdbrain')
-    processed_data = cerebro.preprocess_data()
+    cerebro.preprocess_data()
 
     print("Data loaded and processed.")
-    processed_data.compute_psd(fmin=2.2, fmax=25).plot()
-    plt.show()
+    analysis_json = cerebro.analyze_data()
+
+    with open("test.json", "w") as f:
+        json.dump(analysis_json, f)
 
 
 if __name__ == "__main__":
