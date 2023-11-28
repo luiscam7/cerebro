@@ -32,13 +32,6 @@ class TestCerebro(ICerebro):
         """
         pass
 
-    def write_hdf5(self, filename: str) -> None:
-        """
-        Mock implementation of write_hdf5 for testing.
-        :param filename: Filename for the HDF5 output.
-        """
-        pass
-
 
 class MockRawObject:
     def __init__(self, data=None, info=None):

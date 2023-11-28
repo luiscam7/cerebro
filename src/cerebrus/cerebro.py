@@ -7,6 +7,7 @@ Its modular design caters to the needs of EEG data analysts, researchers, and cl
 accelerating the transition from raw data to insightful neurological interpretations.
 """
 import json
+import numpy as np
 from dataclasses import dataclass
 from mne.io import Raw
 from cerebrus.base import ICerebro
@@ -16,7 +17,7 @@ from cerebrus.preprocessing import (
     remove_powerline_noise,
     remove_ecg_interference,
 )
-from cerebrus.utils.writers import dict_to_json, dict_to_hdf5
+from cerebrus.utils.writers import dict_to_json
 from typing import Dict
 
 
@@ -91,9 +92,3 @@ class Cerebro(ICerebro):
         Save stored analysis data in JSON file format.
         """
         dict_to_json(self.analysis, filename)
-
-    def write_hdf5(self, filename: str) -> None:
-        """
-        Save stored analysis jdata in hdf5 format.
-        """
-        dict_to_hdf5(self.analysis, filename)

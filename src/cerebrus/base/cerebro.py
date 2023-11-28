@@ -38,9 +38,3 @@ class ICerebro(abc.ABC):
         Save stored analysis data in JSON file format.
         """
         pass
-
-    @abc.abstractmethod
-    def write_hdf5(self, filename: str) -> None:
-        """
-        Save stored analysis jdata in hdf5 format.
-        """

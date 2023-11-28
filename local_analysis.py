@@ -19,7 +19,7 @@ def select_file_and_process():
     print("Data loaded and processed.")
     cerebro.analyze_data()
 
-    cerebro.write_json("notebooks/test.json")
+    cerebro.write_hdf5("notebooks/test.hdf5")
 
 
 if __name__ == "__main__":

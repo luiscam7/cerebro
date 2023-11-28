@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.10.0] - 2023-11-28
 
+### Added
+- Unit test for writers.py functions.
+
 ### Changed
 - Changed powerline noise removal logic, using maximum peak height instead of area under the curve to gauge notch filter decision process.
 - Determine frontal generator with absolute band power instead of relative power. 
@@ -19,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 - Removed default sampling rate, nyquist limit, and EEG spectrum parameters from paras.py.
+- Removed hdf5 analysis output method
 
 
 ## [0.9.0] - 2023-11-27
