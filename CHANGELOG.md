@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.9.0] - 2023-11-26
+
+### Added
+- New methods for saving analysis data in the Cerebro class. Save data in JSON, HDF5 format.
+- Added new methods to QEEGAnalysis class. Calculate Power Spectra, Magnitude Spectra, Power Ratios, Determine Frontal Generator, Low voltage EEG endophenotype.
+- EEG Frequency bands are defined in params.
+
+
 ## [0.8.0] - 2023-11-26
 
 ### Changed

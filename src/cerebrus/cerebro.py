@@ -6,6 +6,7 @@ various sources, providing essential functionalities for data loading, preproces
 Its modular design caters to the needs of EEG data analysts, researchers, and clinicians, 
 accelerating the transition from raw data to insightful neurological interpretations.
 """
+import json
 from dataclasses import dataclass
 from mne.io import Raw
 from cerebrus.base import ICerebro
@@ -16,6 +17,7 @@ from cerebrus.preprocessing import (
     remove_ecg_interference,
 )
 from cerebrus.utils.params import DEFAULT_SAMPLING_RATE
+from cerebrus.utils.writers import dict_to_json, dict_to_hdf5
 from typing import Dict
 
 
@@ -62,8 +64,13 @@ class Cerebro(ICerebro):
 
         self.raw_data.resample(sfreq=DEFAULT_SAMPLING_RATE)
         self.filt_data = eeg_filter(self.raw_data)
-        self.filt_data, self.analysis['powerline_noise_detected'] = remove_powerline_noise(self.filt_data)
-        self.filt_data, self.analysis['ecg_noise_detected'] = remove_ecg_interference(self.filt_data)
+        (
+            self.filt_data,
+            self.analysis["powerline_noise_detected"],
+        ) = remove_powerline_noise(self.filt_data)
+        self.filt_data, self.analysis["ecg_noise_detected"] = remove_ecg_interference(
+            self.filt_data
+        )
 
         return self.filt_data
 
@@ -79,3 +86,15 @@ class Cerebro(ICerebro):
             self.data = self.raw_data
         if self.filt_data:
             self.data = self.filt_data
+
+    def write_json(self, filename: str) -> None:
+        """
+        Save stored analysis data in JSON file format.
+        """
+        dict_to_json(self.analysis, filename)
+
+    def write_hdf5(self, filename: str) -> None:
+        """
+        Save stored analysis jdata in hdf5 format.
+        """
+        dict_to_hdf5(self.analysis, filename)

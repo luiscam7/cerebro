@@ -1,6 +1,6 @@
 import json
 from tkinter import filedialog
-from cerebrus.qeeg import PowerSpectralAnalysis  
+from cerebrus.qeeg import QeegAnalysis
 
 def select_file_and_process():
 
@@ -12,15 +12,14 @@ def select_file_and_process():
         print("No file selected.")
         return
 
-    cerebro = PowerSpectralAnalysis()
+    cerebro = QeegAnalysis()
     cerebro.load_data(file_path, source='tdbrain')
     cerebro.preprocess_data()
 
     print("Data loaded and processed.")
-    analysis_json = cerebro.analyze_data()
+    cerebro.analyze_data()
 
-    with open("test.json", "w") as f:
-        json.dump(analysis_json, f)
+    cerebro.write_json("notebooks/test.json")
 
 
 if __name__ == "__main__":
