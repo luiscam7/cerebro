@@ -8,8 +8,7 @@ from numpy.typing import NDArray
 from cerebrus.cerebro import Cerebro
 from cerebrus.utils.params import (
     CHANNELS_10_20,
-    NYQUIST_LIMIT,
-    EEG_SPECTRUM,
+    EEG_SPECTRUM_BANDS,
     STABLE_FRONTAL_SENSORS,
     STABLE_CENTRAL_SENSORS,
     STABLE_POSTERIOR_SENSORS,
@@ -50,7 +49,7 @@ class QeegAnalysis(Cerebro):
             method="welch",
             picks="eeg",
             fmin=0,
-            fmax=NYQUIST_LIMIT,
+            fmax=200,
             n_overlap=256,
             n_per_seg=512,
         )
@@ -60,7 +59,24 @@ class QeegAnalysis(Cerebro):
 
         self.analysis["power_spectral_density"] = self.psd_data.to_dict(orient="list")
 
+        # Define frequency bands for downstream QEEG processing.
+        self.set_frequency_indexing()
+
         return self.psd_data
+
+    def set_frequency_indexing(self):
+        """
+        Set up boolean indexing to simplify QEEG processing logic across bands.
+        """
+        frequencies = self.psd_data["freq"].values
+
+        for frequency_band, band_range in EEG_SPECTRUM_BANDS.items():
+            f1, f2 = band_range
+
+            # Set the attribute for each power band
+            setattr(
+                self, f"{frequency_band}_band", (frequencies > f1) & (frequencies <= f2)
+            )
 
     def compute_magnitude_spectra_from_psd(self) -> pd.DataFrame:
         """
@@ -71,10 +87,9 @@ class QeegAnalysis(Cerebro):
                 "Power Spectral Density data is not available. Must be calculated first before converting to Magnitude "
             )
 
-        columns_to_apply = self.psd_data.columns.difference(["freqs"])
-
         # Convert to microvolts, transform Power Spectral data to Magnitude spectral data.
-        self.magnitude_data = (self.psd_data[columns_to_apply] * 1e12) ** 0.5
+        self.magnitude_data = (self.psd_data[CHANNELS_10_20] * 10e12) ** 0.5
+        self.magnitude_data["freq"] = self.psd_data["freq"]
 
         self.analysis["magnitude_spectral_density"] = self.magnitude_data.to_dict(
             orient="list"
@@ -88,11 +103,16 @@ class QeegAnalysis(Cerebro):
         and updates the analysis dictionary with global and regional absolute power values.
         """
         self.analysis["absolute_power"] = {}
-        columns_to_apply = self.psd_data.columns.difference(["freqs"])
+        columns_to_apply = self.psd_data.columns.difference(["freq"])
+        frequencies = self.psd_data["freq"].values
 
-        for frequency_band, band_range in EEG_SPECTRUM.items():
+        for frequency_band, band_range in EEG_SPECTRUM_BANDS.items():
+            frequency_range = (frequencies > band_range[0]) & (
+                frequencies <= band_range[1]
+            )
+
             band_absolute_power_df = self.psd_data[columns_to_apply].apply(
-                lambda column: calculate_absolute_power(column, band_range), axis=0
+                lambda column: calculate_absolute_power(column, frequency_range), axis=0
             )
             self.analysis["absolute_power"][frequency_band] = band_absolute_power_df[
                 CHANNELS_10_20
@@ -151,21 +171,13 @@ class QeegAnalysis(Cerebro):
         return power_ratios
 
     def determine_frontal_generator(self) -> bool:
-        frontal_relative_alpha_power = self.alpha_relative_power[
-            STABLE_FRONTAL_SENSORS
-        ].mean()
-        posterior_relative_alpha_power = self.alpha_relative_power[
-            STABLE_POSTERIOR_SENSORS
-        ].mean()
+        frontal_alpha_power = self.alpha_power[STABLE_FRONTAL_SENSORS].mean()
+        posterior_alpha_power = self.alpha_power[STABLE_POSTERIOR_SENSORS].mean()
 
-        frontal_posterior_power_ratio = (
-            frontal_relative_alpha_power / posterior_relative_alpha_power
-        )
+        frontal_posterior_power_ratio = frontal_alpha_power / posterior_alpha_power
 
-        self.analysis["frontal_relative_alpha_power"] = frontal_relative_alpha_power
-        self.analysis[
-            "posterior_relative__alpha_power"
-        ] = posterior_relative_alpha_power
+        self.analysis["frontal_alpha_power"] = frontal_alpha_power
+        self.analysis["posterior_alpha_power"] = posterior_alpha_power
 
         self.analysis["frontal_posterior_power_ratio"] = frontal_posterior_power_ratio
         self.analysis["frontal_generator"] = False
@@ -179,17 +191,17 @@ class QeegAnalysis(Cerebro):
         frontal_alpha_scale = (
             self.magnitude_data[STABLE_FRONTAL_SENSORS]
             .mean(axis=1)
-            .values[EEG_SPECTRUM["alpha"]]
+            .values[self.alpha_band]
         ).max()
         central_alpha_scale = (
             self.magnitude_data[STABLE_CENTRAL_SENSORS]
             .mean(axis=1)
-            .values[EEG_SPECTRUM["alpha"]]
+            .values[self.alpha_band]
         ).max()
         posterior_alpha_scale = (
             self.magnitude_data[STABLE_POSTERIOR_SENSORS]
             .mean(axis=1)
-            .values[EEG_SPECTRUM["alpha"]]
+            .values[self.alpha_band]
         ).max()
 
         self.analysis["low_voltage"] = False

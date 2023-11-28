@@ -17,7 +17,10 @@ def select_file_and_process():
     cerebro.preprocess_data()
 
     print("Data loaded and processed.")
-    cerebro.raw_data.compute_psd(fmin=0, fmax=100).plot()
+    assert cerebro.raw_data != cerebro.filt_data
+    cerebro.raw_data.compute_psd().plot()
+    cerebro.filt_data.compute_psd().plot()
+
     plt.show()
 
 

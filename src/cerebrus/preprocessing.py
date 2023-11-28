@@ -15,7 +15,20 @@ logging.basicConfig(
 )
 
 
-def eeg_filter(raw: Raw, l_freq: float = 1, h_freq: float = None) -> Raw:
+def eeg_filter(raw: Raw, l_freq: float = 1.0, h_freq: float = None) -> Raw:
+    """
+    Bandpass filter on the raw eeg data
+
+    Parameters:
+    raw (Raw): The raw EEG data.
+    l_freq (float): Low frequency cut off parameter. Frequencies below this value will be attenuated in the EEG spectrum.
+    h_freq (float): High frequency cut off parameter. Frequencies above this value will be attenuated in the EEG spectrum.
+
+
+    Returns:
+    Raw: The EEG data after potential notch filtering.
+    bool: Boolean regarding wether powerline noise was detected and removed.
+    """
     filtered_raw = raw.filter(
         l_freq=l_freq,
         h_freq=h_freq,
@@ -52,17 +65,17 @@ def remove_powerline_noise(raw: Raw) -> Tuple[Raw, bool]:
         f_bin_60 = (freqs >= 58) & (freqs <= 62)
 
         # Calculate the area under the curve using Simpson's rule
-        area_50 = simps(avg_psd[f_bin_50], dx=freqs[1] - freqs[0])
-        area_60 = simps(avg_psd[f_bin_60], dx=freqs[1] - freqs[0])
+        max_amplitude_50 = max(avg_psd[f_bin_50])
+        max_amplitude_60 = max(avg_psd[f_bin_60])
 
         # Calculate the total area excluding the 50 Hz and 60 Hz bins
-        total_area = simps(avg_psd[~(f_bin_50 | f_bin_60)], dx=freqs[1] - freqs[0])
+        max_amplitude_full_spectrum = max(avg_psd[~(f_bin_50 | f_bin_60)])
 
         # Apply notch filters based on the energy in the specified bins
         freqs_to_notch = []
-        if area_50 > total_area:
+        if max_amplitude_50 > max_amplitude_full_spectrum:
             freqs_to_notch.append(50)
-        if area_60 > total_area:
+        if max_amplitude_60 > max_amplitude_full_spectrum:
             freqs_to_notch.append(60)
 
         if freqs_to_notch:

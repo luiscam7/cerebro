@@ -6,16 +6,38 @@ from mne.io import Raw
 
 class TestCerebro(ICerebro):
     def load_data(self, filepath: str) -> Raw:
-        # Basic implementation for testing
+        """
+        Mock implementation of load_data for testing.
+        :param filepath: Path to the file.
+        """
         return MockRawObject()  # Replace with a suitable mock or dummy object
 
     def preprocess_data(self, **kwargs: Any) -> Raw:
-        # Basic implementation for testing
+        """
+        Mock implementation of preprocess_data for testing.
+        :param kwargs: Additional arguments for preprocessing.
+        """
         return MockRawObject()  # Replace with a suitable mock or dummy object
 
     def analyze_data(self) -> Dict:
-        # Basic implementation for testing
+        """
+        Mock implementation of analyze_data for testing.
+        """
         return {}
+
+    def write_json(self, filename: str) -> None:
+        """
+        Mock implementation of write_json for testing.
+        :param filename: Filename for the JSON output.
+        """
+        pass
+
+    def write_hdf5(self, filename: str) -> None:
+        """
+        Mock implementation of write_hdf5 for testing.
+        :param filename: Filename for the HDF5 output.
+        """
+        pass
 
 
 class MockRawObject:

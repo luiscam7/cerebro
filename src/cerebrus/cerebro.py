@@ -16,7 +16,6 @@ from cerebrus.preprocessing import (
     remove_powerline_noise,
     remove_ecg_interference,
 )
-from cerebrus.utils.params import DEFAULT_SAMPLING_RATE
 from cerebrus.utils.writers import dict_to_json, dict_to_hdf5
 from typing import Dict
 
@@ -62,8 +61,8 @@ class Cerebro(ICerebro):
         if self.raw_data is None:
             raise ValueError("No raw data to preprocess. Please load the data first.")
 
-        self.raw_data.resample(sfreq=DEFAULT_SAMPLING_RATE)
-        self.filt_data = eeg_filter(self.raw_data)
+        raw_eeg = self.raw_data.copy()
+        self.filt_data = eeg_filter(raw_eeg)
         (
             self.filt_data,
             self.analysis["powerline_noise_detected"],

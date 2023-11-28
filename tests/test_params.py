@@ -1,13 +1,8 @@
 from cerebrus.utils.params import (
-    DEFAULT_SAMPLING_RATE,
     ECG_ARTIFACT_ICA_DETECTION_THRESHOLD,
     CHANNELS_10_20,
     CONVERT_TO_10_20,
 )
-
-
-def test_default_sampling_rate():
-    assert DEFAULT_SAMPLING_RATE == 200, "Default sampling rate should be 200"
 
 
 def test_ecg_artifact_ica_detection_threshold():

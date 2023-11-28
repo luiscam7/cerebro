@@ -7,7 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.9.0] - 2023-11-26
+
+## [0.10.0] - 2023-11-28
+
+### Changed
+- Changed powerline noise removal logic, using maximum peak height instead of area under the curve to gauge notch filter decision process.
+- Determine frontal generator with absolute band power instead of relative power. 
+
+### Fixed
+- Fixed a bug where preprocessing would impact both the original eeg as well as the filtered (processed) data. 
+
+### Removed
+- Removed default sampling rate, nyquist limit, and EEG spectrum parameters from paras.py.
+
+
+## [0.9.0] - 2023-11-27
 
 ### Added
 - New methods for saving analysis data in the Cerebro class. Save data in JSON, HDF5 format.

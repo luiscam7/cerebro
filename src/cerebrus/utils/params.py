@@ -4,40 +4,26 @@ import numpy as np
 
 # Configuration constants
 
+# Threshold for determining certain EEG phenotypes
+
+# Describes the ratio between frontal and posterior relative power.
+FRONTAL_GENERATOR_THRESHOLD = 0.7
+
+# If the scale across all regions falls below this value in terms of microvolts, case is classified as Low voltage
+LOW_VOLTAGE_THRESHOLD = 2.5
+
 # Set precision for all float outputs
 DEFAULT_FLOAT_PRECISION = 2
 
-# Default sampling rate is set to 200 to standardize analyze across different EEG sources with variable sampling rates.
-DEFAULT_SAMPLING_RATE = 200
-NYQUIST_LIMIT = DEFAULT_SAMPLING_RATE // 2
-
 # EEG Band definitions
-DELTA_RANGE = (0.5, 4)
-THETA_RANGE = (4, 8)
-ALPHA_RANGE = (8, 13)
-BETA_RANGE = (13, 30)
 
-# Define frequency bands, makes it easy to define logic in future functions.
-EEG_FREQUENCY_BAND = np.linspace(0, NYQUIST_LIMIT, 1025)
-
-DELTA_FREQUENCY_BAND = (EEG_FREQUENCY_BAND > DELTA_RANGE[0]) & (
-    EEG_FREQUENCY_BAND <= DELTA_RANGE[1]
-)
-THETA_FREQUENCY_BAND = (EEG_FREQUENCY_BAND > THETA_RANGE[0]) & (
-    EEG_FREQUENCY_BAND <= THETA_RANGE[1]
-)
-ALPHA_FREQUENCY_BAND = (EEG_FREQUENCY_BAND > ALPHA_RANGE[0]) & (
-    EEG_FREQUENCY_BAND <= ALPHA_RANGE[1]
-)
-BETA_FREQUENCY_BAND = (EEG_FREQUENCY_BAND > BETA_RANGE[0]) & (
-    EEG_FREQUENCY_BAND <= BETA_RANGE[1]
-)
-EEG_SPECTRUM = {
-    "delta": DELTA_FREQUENCY_BAND,
-    "theta": THETA_FREQUENCY_BAND,
-    "alpha": ALPHA_FREQUENCY_BAND,
-    "beta": BETA_FREQUENCY_BAND,
+EEG_SPECTRUM_BANDS = {
+    "delta": (0.5, 4),
+    "theta": (4, 8),
+    "alpha": (8, 13),
+    "beta": (13, 30),
 }
+
 
 # Set ECG interference threshold (0 to 1). A value near 1 implies a higher likelihood of ECG interference. This threshold guides ICA removal of ECG artifacts. Higher values decrease the risk of incorrect ICA application.
 ECG_ARTIFACT_ICA_DETECTION_THRESHOLD = 0.75
@@ -123,12 +109,3 @@ STABLE_POSTERIOR_SENSORS = ["Pz", "P3", "P4", "O1", "O2"]
 ALL_FRONTAL_SENSORS = ["Fz", "F3", "F4", "F7", "F8", "Fp1", "Fp2"]
 ALL_CENTRAL_SENSORS = ["Cz", "C3", "C4", "T3", "T4"]
 ALL_POSTERIOR_SENSORS = ["Pz", "P3", "P4", "O1", "O2"]
-
-
-# Threshold for determining certain EEG phenotypes
-
-# Describes the ratio between frontal and posterior relative power.
-FRONTAL_GENERATOR_THRESHOLD = 0.8
-
-# If the scale across all regions falls below this value in terms of
-LOW_VOLTAGE_THRESHOLD = 2.5
