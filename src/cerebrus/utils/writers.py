@@ -1,3 +1,7 @@
+"""
+A group of function specialized in returning stored data as binary files. (i.e JSON, CSV, Parquet.)
+"""
+
 import json
 import numpy as np
 

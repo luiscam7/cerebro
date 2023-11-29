@@ -1,19 +1,14 @@
 """Organize all of the variables that correspond to constants and configurations across the project."""
-import numpy as np
-
 
 # Configuration constants
 
-# Threshold for determining certain EEG phenotypes
-
+### Threshold for determining certain EEG phenotypes
 # Describes the ratio between frontal and posterior relative power.
 FRONTAL_GENERATOR_THRESHOLD = 0.7
 
 # If the scale across all regions falls below this value in terms of microvolts, case is classified as Low voltage
 LOW_VOLTAGE_THRESHOLD = 2.5
 
-# Set precision for all float outputs
-DEFAULT_FLOAT_PRECISION = 2
 
 # EEG Band definitions
 

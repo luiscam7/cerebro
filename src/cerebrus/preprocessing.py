@@ -8,7 +8,6 @@ from cerebrus.utils.params import ECG_ARTIFACT_ICA_DETECTION_THRESHOLD
 from mne.io import Raw
 from typing import Tuple
 from mne.preprocessing import ICA, create_ecg_epochs
-from scipy.integrate import simps
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"

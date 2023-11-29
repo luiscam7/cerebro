@@ -1,6 +1,5 @@
 """A module dedicated to organizing commonly used algorithms in QEEG analysis."""
 
-import mne
 import numpy as np
 import pandas as pd
 from numpy.typing import NDArray
@@ -16,10 +15,8 @@ from cerebrus.utils.params import (
     LOW_VOLTAGE_THRESHOLD,
 )
 
-from cerebrus.utils.decorators import set_precision
 from cerebrus.utils.dsp_utils import calculate_total_area_under_curve
-from scipy.integrate import simps
-from typing import Dict, List, Tuple, Any
+from typing import Dict
 
 
 class QeegAnalysis(Cerebro):
@@ -97,10 +94,9 @@ class QeegAnalysis(Cerebro):
 
         return self.magnitude_data
 
-    def compute_absolute_power(self) -> None:
+    def compute_absolute_power(self) -> pd.Series:
         """
-        Computes the absolute power for each frequency band in EEG_SPECTRUM
-        and updates the analysis dictionary with global and regional absolute power values.
+        Computes the absolute power for each frequency band in eeg spectrum (delta, theta, alpha, and beta)
         """
         self.analysis["absolute_power"] = {}
         columns_to_apply = self.psd_data.columns.difference(["freq"])
@@ -123,7 +119,12 @@ class QeegAnalysis(Cerebro):
                 self, f"{frequency_band}_power", band_absolute_power_df[CHANNELS_10_20]
             )
 
-    def compute_relative_power(self) -> Dict:
+        return pd.Series[self.analysis["absolute_power"]]
+
+    def compute_relative_power(self) -> pd.Series:
+        """
+        Computes the relative power for each frequency band in eeg spectrum (delta, theta, alpha, beta).
+        """
         # Ensure absolute power for each band has been computed
         if "absolute_power" not in self.analysis:
             raise ValueError("Absolute power must be computed before relative power.")
@@ -146,9 +147,9 @@ class QeegAnalysis(Cerebro):
 
         self.analysis["relative_power"] = relative_power
 
-        return relative_power
+        return pd.Series(relative_power)
 
-    def compute_power_ratios(self) -> Dict:
+    def compute_power_ratios(self) -> pd.Series:
         """
         Computes power ratios between different EEG frequency bands.
         """
@@ -168,9 +169,12 @@ class QeegAnalysis(Cerebro):
 
         self.analysis["power_ratios"] = power_ratios
 
-        return power_ratios
+        return pd.Series(power_ratios)
 
     def determine_frontal_generator(self) -> bool:
+        """
+        Use the ratio between frontal abdolute power over posterior absolute power to determine frontal generators.
+        """
         frontal_alpha_power = self.alpha_power[STABLE_FRONTAL_SENSORS].mean()
         posterior_alpha_power = self.alpha_power[STABLE_POSTERIOR_SENSORS].mean()
 
@@ -188,6 +192,9 @@ class QeegAnalysis(Cerebro):
         return self.analysis["frontal_generator"]
 
     def determine_low_voltage(self) -> bool:
+        """
+        Determine low voltage cases if every regional spectra is below 2.5 microvolts.
+        """
         frontal_alpha_scale = (
             self.magnitude_data[STABLE_FRONTAL_SENSORS]
             .mean(axis=1)
@@ -237,6 +244,12 @@ class QeegAnalysis(Cerebro):
 def calculate_absolute_power(
     psd: np.ndarray, frequency_band: NDArray[np.bool_]
 ) -> float:
+    """
+    Absolute power can be derived by calculating the area under the curve for any signal.
+    :param psd(np.ndarray): power spectral density.
+    :param frequency_array(boolean array): indices corresponding to EEG band of interest.
+    :return absolute_power (float)
+    """
     partial_psd = psd[frequency_band]
     absolute_power = calculate_total_area_under_curve(partial_psd)
     return absolute_power

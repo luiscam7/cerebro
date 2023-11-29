@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Unit test for writers.py functions.
+- Additional top level documentation across all modules.
 
 ### Changed
 - Changed powerline noise removal logic, using maximum peak height instead of area under the curve to gauge notch filter decision process.
@@ -22,7 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 - Removed default sampling rate, nyquist limit, and EEG spectrum parameters from paras.py.
-- Removed hdf5 analysis output method
+- Removed hdf5 analysis output method.
+- Decorator module.
 
 
 ## [0.9.0] - 2023-11-27
