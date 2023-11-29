@@ -1,4 +1,5 @@
 import json
+import time
 from tkinter import filedialog
 from cerebrus.qeeg import QeegAnalysis
 
@@ -12,14 +13,15 @@ def select_file_and_process():
         print("No file selected.")
         return
 
+    start = time.time()
     cerebro = QeegAnalysis()
     cerebro.load_data(file_path, source='tdbrain')
     cerebro.preprocess_data()
 
     print("Data loaded and processed.")
     cerebro.analyze_data()
-
-    cerebro.write_hdf5("notebooks/test.hdf5")
+    print('EEG processing took', time.time()-start, 'seconds.')
+    cerebro.write_json("notebooks/test.json")
 
 
 if __name__ == "__main__":

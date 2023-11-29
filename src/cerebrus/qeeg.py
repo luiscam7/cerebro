@@ -119,7 +119,7 @@ class QeegAnalysis(Cerebro):
                 self, f"{frequency_band}_power", band_absolute_power_df[CHANNELS_10_20]
             )
 
-        return pd.Series[self.analysis["absolute_power"]]
+        return pd.Series(self.analysis["absolute_power"])
 
     def compute_relative_power(self) -> pd.Series:
         """
