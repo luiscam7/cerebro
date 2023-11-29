@@ -46,7 +46,7 @@ class QeegAnalysis(Cerebro):
             method="welch",
             picks="eeg",
             fmin=0,
-            fmax=200,
+            fmax=100,
             n_overlap=256,
             n_per_seg=512,
         )
@@ -175,15 +175,25 @@ class QeegAnalysis(Cerebro):
         """
         Use the ratio between frontal abdolute power over posterior absolute power to determine frontal generators.
         """
-        frontal_alpha_power = self.alpha_power[STABLE_FRONTAL_SENSORS].mean()
-        posterior_alpha_power = self.alpha_power[STABLE_POSTERIOR_SENSORS].mean()
+        frontal_alpha_relative_power = self.alpha_relative_power[
+            STABLE_FRONTAL_SENSORS
+        ].mean()
+        posterior_alpha_relative_power = self.alpha_relative_power[
+            STABLE_POSTERIOR_SENSORS
+        ].mean()
 
-        frontal_posterior_power_ratio = frontal_alpha_power / posterior_alpha_power
+        frontal_posterior_power_ratio = (
+            frontal_alpha_relative_power / posterior_alpha_relative_power
+        )
 
-        self.analysis["frontal_alpha_power"] = frontal_alpha_power
-        self.analysis["posterior_alpha_power"] = posterior_alpha_power
+        self.analysis["frontal_alpha_relative_power"] = frontal_alpha_relative_power
+        self.analysis[
+            "posterior_alpha__relative_power"
+        ] = posterior_alpha_relative_power
 
-        self.analysis["frontal_posterior_power_ratio"] = frontal_posterior_power_ratio
+        self.analysis[
+            "frontal_posterior_relative_power_ratio"
+        ] = frontal_posterior_power_ratio
         self.analysis["frontal_generator"] = False
 
         if frontal_posterior_power_ratio >= FRONTAL_GENERATOR_THRESHOLD:

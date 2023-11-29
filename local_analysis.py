@@ -15,7 +15,7 @@ def select_file_and_process():
 
     start = time.time()
     cerebro = QeegAnalysis()
-    cerebro.load_data(file_path, source='tdbrain')
+    cerebro.load_data(file_path, source='tuh')
     cerebro.preprocess_data()
 
     print("Data loaded and processed.")

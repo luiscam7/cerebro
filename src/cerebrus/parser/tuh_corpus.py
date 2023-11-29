@@ -1,6 +1,12 @@
+import re
+import logging
 from cerebrus.parser import EdfParser
 from mne.io import Raw
 from cerebrus.utils.params import CHANNELS_10_20
+
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
 
 
 class TuhParser(EdfParser):
@@ -21,13 +27,29 @@ class TuhParser(EdfParser):
             if "EEG" in channel
         }
         raw.rename_channels(channels_10_20)
-        raw.rename_channels({"Ekg1": "ECG"})
 
         # Set channel types
         channel_types = {channel: "eeg" for channel in CHANNELS_10_20}
-        channel_types["ECG"] = "ecg"
-        channel_types["A1"] = "misc"
-        channel_types["A2"] = "misc"
+
+        # Check for ecg channel
+        ecg_pattern = re.compile(r"e[ck]g", re.IGNORECASE)
+
+        # Check each channel name
+        for ch_name in raw.ch_names:
+            if ecg_pattern.search(ch_name):
+                # If found, rename the channel to 'ECG' and set its type
+                raw.rename_channels({ch_name: "ECG"})
+                raw.set_channel_types({"ECG": "ecg"})
+                break
+            else:
+                logging.info("No ECG channel present in the recording.")
+
+        # Check if reference clips are present in the channels.
+        if {"A1", "A2"}.issubset(set(raw.ch_names)):
+            channel_types["A1"] = "misc"
+            channel_types["A2"] = "misc"
+        else:
+            logging.info("No reference channels designated A1 or A2.")
 
         raw.set_channel_types(channel_types)
 

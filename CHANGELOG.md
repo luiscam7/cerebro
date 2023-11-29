@@ -16,8 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Changed powerline noise removal logic, using maximum peak height instead of area under the curve to gauge notch filter decision process.
-- Determine frontal generator with absolute band power instead of relative power. 
-
+- Updated TUH parser to check for ECG and ear clip channels.
 ### Fixed
 - Fixed a bug where preprocessing would impact both the original eeg as well as the filtered (processed) data. 
 
