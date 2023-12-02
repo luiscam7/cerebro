@@ -85,7 +85,7 @@ class QeegAnalysis(Cerebro):
             )
 
         # Convert to microvolts, transform Power Spectral data to Magnitude spectral data.
-        self.magnitude_data = (self.psd_data[CHANNELS_10_20] * 10e12) ** 0.5
+        self.magnitude_data = (self.psd_data[CHANNELS_10_20] * 1e12) ** 0.5
         self.magnitude_data["freq"] = self.psd_data["freq"]
 
         self.analysis["magnitude_spectral_density"] = self.magnitude_data.to_dict(
