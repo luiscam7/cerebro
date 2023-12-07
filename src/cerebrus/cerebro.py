@@ -9,8 +9,10 @@ accelerating the transition from raw data to insightful neurological interpretat
 import json
 import numpy as np
 from dataclasses import dataclass
+from datetime import datetime
 from mne.io import Raw
 from cerebrus.base import ICerebro
+from cerebrus.version import __version__
 from cerebrus.parser import ChbmpParser, TuhParser, TdbrainParser
 from cerebrus.preprocessing import (
     eeg_filter,
@@ -50,6 +52,21 @@ class Cerebro(ICerebro):
             raise KeyError("Cerebro does not currently support EEG from data source.")
 
         self.raw_data = parser.read_eeg(filepath)
+
+        info = self.raw_data.info
+
+        meta_data = {
+            'measuring_date': info['meas_date'],
+            'sampling_rate': info['sfreq']
+        }
+        self.analysis['filepath'] = filepath.split('/')[-1]
+        self.analysis['source'] = source
+        self.analysis['measuring_date'] = info['meas_date'].isoformat()
+        self.analysis['processed_date'] = datetime.now().isoformat()
+        self.analysis['version'] = __version__
+        self.analysis['sampling_rate'] = info['sfreq']
+
+
 
         return self.raw_data
 
