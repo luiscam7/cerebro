@@ -55,20 +55,14 @@ class Cerebro(ICerebro):
 
         info = self.raw_data.info
 
-        meta_data = {
-            'measuring_date': info['meas_date'],
-            'sampling_rate': info['sfreq']
-        }
-        self.analysis['filepath'] = filepath.split('/')[-1]
-        self.analysis['source'] = source
-        self.analysis['measuring_date'] = info['meas_date'].isoformat()
-        self.analysis['processed_date'] = datetime.now().isoformat()
-        self.analysis['version'] = __version__
-        self.analysis['sampling_rate'] = info['sfreq']
+        self.analysis["filepath"] = filepath.split("/")[-1]
+        self.analysis["source"] = source
+        self.analysis["measuring_date"] = info["meas_date"].isoformat()
+        self.analysis["processed_date"] = datetime.now().isoformat()
+        self.analysis["version"] = __version__
+        self.analysis["sampling_rate"] = info["sfreq"]
 
-
-
-        return self.raw_data
+        return self.raw_data.set_eeg_reference("average")
 
     def preprocess_data(self) -> Raw:
         """
