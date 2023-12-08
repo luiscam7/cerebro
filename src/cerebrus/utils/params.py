@@ -4,13 +4,17 @@
 
 ### Threshold for determining certain EEG phenotypes
 # Describes the ratio between frontal and posterior relative power.
-FRONTAL_GENERATOR_THRESHOLD = 0.7
+FRONTAL_GENERATOR_THRESHOLD = 0.6
 
 # If the scale across all regions falls below this value in terms of microvolts, case is classified as Low voltage
 LOW_VOLTAGE_THRESHOLD = 2.5
 
 
 # EEG Band definitions
+DELTA_BAND = (0.5, 4)
+THETA_BAND = (4, 8)
+ALPHA_BAND = (8, 13)
+BETA_BAND = (13, 30)
 
 EEG_SPECTRUM_BANDS = {
     "delta": (0.5, 4),

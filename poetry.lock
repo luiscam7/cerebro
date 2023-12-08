@@ -485,6 +485,28 @@ unicode = ["unicodedata2 (>=15.1.0)"]
 woff = ["brotli (>=1.0.1)", "brotlicffi (>=0.8.0)", "zopfli (>=0.1.4)"]
 
 [[package]]
+name = "fooof"
+version = "1.1.0"
+description = "fitting oscillations & one-over f"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "fooof-1.1.0-py3-none-any.whl", hash = "sha256:d5851f1dfdf6214a84a50edce82a21389e033f0e89c720e89c2f6f8326d0f254"},
+    {file = "fooof-1.1.0.tar.gz", hash = "sha256:6b38f28a8a9a787121d4741335ca4737c65d356dfbf64d9e5c04cd5510a5a72c"},
+]
+
+[package.dependencies]
+numpy = "*"
+scipy = ">=0.19"
+
+[package.extras]
+all = ["matplotlib", "pandas", "pytest", "tqdm"]
+data = ["pandas"]
+plot = ["matplotlib"]
+tests = ["pytest"]
+
+[[package]]
 name = "idna"
 version = "3.6"
 description = "Internationalized Domain Names in Applications (IDNA)"
@@ -842,6 +864,23 @@ files = [
     {file = "mypy_extensions-1.0.0-py3-none-any.whl", hash = "sha256:4392f6c0eb8a5668a69e23d168ffa70f0be9ccfd32b5cc2d26a34ae5b844552d"},
     {file = "mypy_extensions-1.0.0.tar.gz", hash = "sha256:75dbf8955dc00442a438fc4d0666508a9a97b6bd41aa2f0ffe9d2f2725af0782"},
 ]
+
+[[package]]
+name = "neurodsp"
+version = "2.2.1"
+description = "Digital signal processing for neural time series."
+category = "main"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "neurodsp-2.2.1-py3-none-any.whl", hash = "sha256:7b16ab536d678939793c31400dd75dac9c66fa5e82cab69d00991030baa23b17"},
+    {file = "neurodsp-2.2.1.tar.gz", hash = "sha256:ca8d02cf0c50373f9a61f49e5d77ac323a979d9779c6dde209fc547f0eb10f58"},
+]
+
+[package.dependencies]
+matplotlib = "*"
+numpy = "*"
+scipy = "*"
 
 [[package]]
 name = "numpy"
@@ -1459,4 +1498,4 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "3039f273d3ccfdbe72559898768f17b519526c0e72f752b671ff74668b91f697"
+content-hash = "2c8c6a6b2cc1a1d41482babda44d0dd09c8bd894ef0f3360f0e7c76c6ef41832"

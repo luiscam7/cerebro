@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+
+## [0.12.0] - 2023-12-07
+
+### Added
+- NeuroDSP convenient functions for absolute/relative/band ratio power calculations.
+- Fooof library for finding individual alpha peak frequency and statistics.
+
+### Removed
+- Native absolute power calculation.
+
+### Changed
+- Refactored QEEG analysis code with NeuroDSP functions to simplify the codebase.
+
 ## [0.11.0] - 2023-12-06
 
 ### Added
