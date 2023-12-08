@@ -1,7 +1,7 @@
 import json
 import time
 from tkinter import filedialog
-from cerebrus.spectral_analysis import SpectralAnalysis
+from cerebrus.connectivity import ConnectivityAnalysis
 
 def select_file_and_process():
 
@@ -14,8 +14,8 @@ def select_file_and_process():
         return
 
     start = time.time()
-    cerebro = SpectralAnalysis()
-    cerebro.load_data(file_path, source='tuh')
+    cerebro = ConnectivityAnalysis()
+    cerebro.load_data(file_path, source='chbmp')
     cerebro.preprocess_data()
 
     print("Data loaded and processed.")

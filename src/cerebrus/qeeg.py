@@ -19,8 +19,6 @@ from cerebrus.utils.params import (
     LOW_VOLTAGE_THRESHOLD,
 )
 
-from cerebrus.utils.dsp_utils import calculate_total_area_under_curve
-
 from neurodsp.spectral import (
     compute_absolute_power,
     compute_relative_power,

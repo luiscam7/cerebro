@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Added peak detection with Fooof library.
+- Connectivity and graph analysis.
 - Added unit test for get_version function.
 
 ### Removed
