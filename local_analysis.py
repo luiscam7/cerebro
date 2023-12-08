@@ -1,7 +1,7 @@
 import json
 import time
 from tkinter import filedialog
-from cerebrus.qeeg import QeegAnalysis
+from cerebrus.spectral_analysis import SpectralAnalysis
 
 def select_file_and_process():
 
@@ -14,7 +14,7 @@ def select_file_and_process():
         return
 
     start = time.time()
-    cerebro = QeegAnalysis()
+    cerebro = SpectralAnalysis()
     cerebro.load_data(file_path, source='tuh')
     cerebro.preprocess_data()
 

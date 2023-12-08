@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+## [0.13.0] - 2023-12-08
+
+### Added
+- Added peak detection with Fooof library.
+
+
 ## [0.12.0] - 2023-12-07
 
 ### Added
