@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Added peak detection with Fooof library.
+- Added unit test for get_version function.
+
+### Removed
+- DSP_utils folder and functions.
 
 
 ## [0.12.0] - 2023-12-07
