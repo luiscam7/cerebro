@@ -3,7 +3,7 @@ import os
 import json
 import numpy as np
 
-from cerebrus.utils.writers import dict_to_json
+from cerebro.utils.writers import dict_to_json
 
 
 class TestWriters(unittest.TestCase):

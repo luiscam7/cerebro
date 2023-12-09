@@ -1,7 +1,7 @@
 import json
 import time
 from tkinter import filedialog
-from cerebrus.connectivity import ConnectivityAnalysis
+from cerebro.connectivity import ConnectivityAnalysis
 
 def select_file_and_process():
 

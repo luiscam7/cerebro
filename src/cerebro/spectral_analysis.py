@@ -1,8 +1,8 @@
 """Extends QEEG Aanalysis with peak detection and spectral analysis of resting state EEG, currently investigating alpha band activity (8-13 Hz)"""
 
 import pandas as pd
-from cerebrus.qeeg import QeegAnalysis
-from cerebrus.utils.params import CHANNELS_10_20, ALPHA_BAND
+from cerebro.qeeg import QeegAnalysis
+from cerebro.utils.params import CHANNELS_10_20, ALPHA_BAND
 from fooof import FOOOFGroup
 from typing import Dict
 

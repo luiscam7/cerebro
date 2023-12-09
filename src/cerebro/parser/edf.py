@@ -1,6 +1,6 @@
 import mne
 from mne.io import Raw
-from cerebrus.base.parser import Parser
+from cerebro.base.parser import Parser
 
 
 class EdfParser(Parser):

@@ -3,7 +3,7 @@ from unittest.mock import mock_open, patch
 import toml
 
 # Assuming your get_version function is in a module named 'version'
-from cerebrus import version
+from cerebro import version
 
 
 class TestGetVersion(unittest.TestCase):

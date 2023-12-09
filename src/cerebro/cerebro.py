@@ -11,15 +11,15 @@ import numpy as np
 from dataclasses import dataclass
 from datetime import datetime
 from mne.io import Raw
-from cerebrus.base import ICerebro
-from cerebrus.version import __version__
-from cerebrus.parser import ChbmpParser, TuhParser, TdbrainParser
-from cerebrus.preprocessing import (
+from cerebro.base import ICerebro
+from cerebro.version import __version__
+from cerebro.parser import ChbmpParser, TuhParser, TdbrainParser
+from cerebro.preprocessing import (
     eeg_filter,
     remove_powerline_noise,
     remove_ecg_interference,
 )
-from cerebrus.utils.writers import dict_to_json
+from cerebro.utils.writers import dict_to_json
 from typing import Dict
 
 

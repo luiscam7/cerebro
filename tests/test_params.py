@@ -1,4 +1,4 @@
-from cerebrus.utils.params import (
+from cerebro.utils.params import (
     ECG_ARTIFACT_ICA_DETECTION_THRESHOLD,
     CHANNELS_10_20,
     CONVERT_TO_10_20,

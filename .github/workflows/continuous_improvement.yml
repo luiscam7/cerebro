@@ -44,4 +44,4 @@ jobs:
 
     - name: Coverage report
       run: |
-        poetry run pytest --cov=cerebrus
+        poetry run pytest --cov=cerebro

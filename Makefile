@@ -10,4 +10,4 @@ test:
 	pytest
 
 coverage:
-	pytest --cov=cerebrus
+	pytest --cov=cerebro

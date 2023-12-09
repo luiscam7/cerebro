@@ -1,8 +1,8 @@
 import numpy as np
 import networkx as nx
 import scipy.signal
-from cerebrus.spectral_analysis import SpectralAnalysis
-from cerebrus.utils.params import ALPHA_BAND, STABLE_FRONTAL_SENSORS
+from cerebro.spectral_analysis import SpectralAnalysis
+from cerebro.utils.params import ALPHA_BAND, STABLE_FRONTAL_SENSORS
 from typing import Dict
 
 
