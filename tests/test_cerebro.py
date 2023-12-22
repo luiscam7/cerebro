@@ -1,7 +1,9 @@
 import unittest
-from cerebro.base import ICerebro
 from typing import Any, Dict
+
 from mne.io import Raw
+
+from cerebro.base import ICerebro
 
 
 class TestCerebro(ICerebro):

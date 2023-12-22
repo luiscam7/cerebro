@@ -1,7 +1,9 @@
-import re
 import logging
-from cerebro.parser import EdfParser
+import re
+
 from mne.io import Raw
+
+from cerebro.parser import EdfParser
 from cerebro.utils.params import CHANNELS_10_20
 
 logging.basicConfig(

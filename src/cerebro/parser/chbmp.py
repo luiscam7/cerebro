@@ -1,9 +1,7 @@
-from cerebro.parser import EdfParser
 from mne.io import Raw
-from cerebro.utils.params import (
-    CHANNELS_10_20,
-    CONVERT_TO_10_20,
-)
+
+from cerebro.parser import EdfParser
+from cerebro.utils.params import CHANNELS_10_20, CONVERT_TO_10_20
 
 
 class ChbmpParser(EdfParser):

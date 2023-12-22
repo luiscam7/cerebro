@@ -1,9 +1,7 @@
 from mne.io import Raw
+
 from cerebro.parser import BrainvisionParser
-from cerebro.utils.params import (
-    CHANNELS_10_20,
-    TDBRAIN_CHANNEL_MAPPING,
-)
+from cerebro.utils.params import CHANNELS_10_20, TDBRAIN_CHANNEL_MAPPING
 
 
 class TdbrainParser(BrainvisionParser):

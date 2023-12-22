@@ -1,5 +1,6 @@
 import abc
 from typing import Any, Dict
+
 from mne.io import Raw
 
 

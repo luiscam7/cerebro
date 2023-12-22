@@ -1,31 +1,21 @@
 """A module dedicated to organizing commonly used algorithms in QEEG analysis."""
 
+from typing import Dict
+
 import numpy as np
 import pandas as pd
+from neurodsp.spectral import (compute_absolute_power, compute_band_ratio,
+                               compute_relative_power, trim_spectrum)
 from numpy.typing import NDArray
 
 from cerebro.cerebro import Cerebro
-from cerebro.utils.params import (
-    CHANNELS_10_20,
-    DELTA_BAND,
-    THETA_BAND,
-    ALPHA_BAND,
-    BETA_BAND,
-    EEG_SPECTRUM_BANDS,
-    STABLE_FRONTAL_SENSORS,
-    STABLE_CENTRAL_SENSORS,
-    STABLE_POSTERIOR_SENSORS,
-    FRONTAL_GENERATOR_THRESHOLD,
-    LOW_VOLTAGE_THRESHOLD,
-)
-
-from neurodsp.spectral import (
-    compute_absolute_power,
-    compute_relative_power,
-    compute_band_ratio,
-    trim_spectrum,
-)
-from typing import Dict
+from cerebro.utils.params import (ALPHA_BAND, BETA_BAND, CHANNELS_10_20,
+                                  DELTA_BAND, EEG_SPECTRUM_BANDS,
+                                  FRONTAL_GENERATOR_THRESHOLD,
+                                  LOW_VOLTAGE_THRESHOLD,
+                                  STABLE_CENTRAL_SENSORS,
+                                  STABLE_FRONTAL_SENSORS,
+                                  STABLE_POSTERIOR_SENSORS, THETA_BAND)
 
 
 class QeegAnalysis(Cerebro):

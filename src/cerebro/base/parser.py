@@ -1,4 +1,5 @@
 import abc
+
 from mne.io import Raw
 
 

@@ -1,5 +1,5 @@
-from .edf import EdfParser
 from .brainvision import BrainvisionParser
-from .tuh_corpus import TuhParser
 from .chbmp import ChbmpParser
+from .edf import EdfParser
 from .tdbrain import TdbrainParser
+from .tuh_corpus import TuhParser

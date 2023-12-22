@@ -1,9 +1,11 @@
-import numpy as np
+from typing import Dict
+
 import networkx as nx
+import numpy as np
 import scipy.signal
+
 from cerebro.spectral_analysis import SpectralAnalysis
 from cerebro.utils.params import ALPHA_BAND, STABLE_FRONTAL_SENSORS
-from typing import Dict
 
 
 class ConnectivityAnalysis(SpectralAnalysis):
