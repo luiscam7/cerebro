@@ -1,5 +1,8 @@
-from cerebro.utils.params import (CHANNELS_10_20, CONVERT_TO_10_20,
-                                  ECG_ARTIFACT_ICA_DETECTION_THRESHOLD)
+from cerebro.utils.params import (
+    CHANNELS_10_20,
+    CONVERT_TO_10_20,
+    ECG_ARTIFACT_ICA_DETECTION_THRESHOLD,
+)
 
 
 def test_ecg_artifact_ica_detection_threshold():

@@ -16,8 +16,11 @@ from mne.io import Raw
 
 from cerebro.base import ICerebro
 from cerebro.parser import ChbmpParser, TdbrainParser, TuhParser
-from cerebro.preprocessing import (eeg_filter, remove_ecg_interference,
-                                   remove_powerline_noise)
+from cerebro.preprocessing import (
+    eeg_filter,
+    remove_ecg_interference,
+    remove_powerline_noise,
+)
 from cerebro.utils.writers import dict_to_json
 from cerebro.version import __version__
 

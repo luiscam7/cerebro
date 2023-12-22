@@ -78,7 +78,7 @@ class ConnectivityAnalysis(SpectralAnalysis):
         measures = {
             "degree": dict(G.degree(weight="weight")),
             "betweenness_centrality": nx.betweenness_centrality(G, weight="weight"),
-            "closeness_centrality": nx.closeness_centrality(G, distance="weight")
+            "closeness_centrality": nx.closeness_centrality(G, distance="weight"),
             # Add other measures as needed
         }
 
