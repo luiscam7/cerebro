@@ -24,8 +24,6 @@ toml = "^0.10.2"
 fooof = "^1.1.0"
 neurodsp = "^2.2.1"
 networkx = "^3.2.1"
-ipykernel = "^6.27.1"
-isort = "^5.13.2"
 
 [tool.pytest.ini_options]
 testpaths = [

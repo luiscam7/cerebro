@@ -1,6 +1,5 @@
 import unittest
 from unittest.mock import mock_open, patch
-
 import toml
 
 # Assuming your get_version function is in a module named 'version'

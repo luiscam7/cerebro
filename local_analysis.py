@@ -1,16 +1,21 @@
 import json
 import time
-
+from tkinter import filedialog
 from cerebro.connectivity import ConnectivityAnalysis
-
 
 def select_file_and_process():
 
-    file_path = input("Enter filepath: ")
+    file_path = filedialog.askopenfilename(
+        title="Select EEG Data File",
+    )
+
+    if not file_path:
+        print("No file selected.")
+        return
 
     start = time.time()
     cerebro = ConnectivityAnalysis()
-    cerebro.load_data(file_path, source='tuh')
+    cerebro.load_data(file_path, source='chbmp')
     cerebro.preprocess_data()
 
     print("Data loaded and processed.")

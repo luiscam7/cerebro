@@ -7,19 +7,20 @@ Its modular design caters to the needs of EEG data analysts, researchers, and cl
 accelerating the transition from raw data to insightful neurological interpretations.
 """
 import json
+import numpy as np
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Dict
-
-import numpy as np
 from mne.io import Raw
-
 from cerebro.base import ICerebro
-from cerebro.parser import ChbmpParser, TdbrainParser, TuhParser
-from cerebro.preprocessing import (eeg_filter, remove_ecg_interference,
-                                   remove_powerline_noise)
-from cerebro.utils.writers import dict_to_json
 from cerebro.version import __version__
+from cerebro.parser import ChbmpParser, TuhParser, TdbrainParser
+from cerebro.preprocessing import (
+    eeg_filter,
+    remove_powerline_noise,
+    remove_ecg_interference,
+)
+from cerebro.utils.writers import dict_to_json
+from typing import Dict
 
 
 @dataclass

@@ -3,9 +3,10 @@ A group of function specialized in returning stored data as binary files. (i.e J
 """
 
 import json
-from typing import Any, Dict
-
 import numpy as np
+
+
+from typing import Any, Dict
 
 
 def dict_to_json(data: Dict[str, Any], filename: str) -> None:

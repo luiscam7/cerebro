@@ -2,13 +2,12 @@
 A collection of functions pertaining to processing EEG data for the removal of signal contamination from movement, muscle tension, and other sources of non-neurological signals.
 """
 import logging
-from typing import Tuple
 
 import numpy as np
-from mne.io import Raw
-from mne.preprocessing import ICA, create_ecg_epochs
-
 from cerebro.utils.params import ECG_ARTIFACT_ICA_DETECTION_THRESHOLD
+from mne.io import Raw
+from typing import Tuple
+from mne.preprocessing import ICA, create_ecg_epochs
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"

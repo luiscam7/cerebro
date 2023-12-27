@@ -1,7 +1,6 @@
-import json
-import os
 import unittest
-
+import os
+import json
 import numpy as np
 
 from cerebro.utils.writers import dict_to_json

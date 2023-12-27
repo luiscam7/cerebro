@@ -1,18 +1,19 @@
 import matplotlib.pyplot as plt
-
+from tkinter import filedialog
 from cerebro import Cerebro
-
 
 def select_file_and_process():
 
-    file_path = input("Enter filepath: ")
+    file_path = filedialog.askopenfilename(
+        title="Select EEG Data File",
+    )
 
     if not file_path:
         print("No file selected.")
         return
 
     cerebro = Cerebro()
-    cerebro.load_data(file_path, source='chbmp')
+    cerebro.load_data(file_path, source='tuh')
     cerebro.preprocess_data()
 
     bands = {'Delta (0-4 Hz)': (0, 4), 'Theta (4-8 Hz)': (4, 8),
