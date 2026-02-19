@@ -14,19 +14,18 @@ logging.basicConfig(
 )
 
 
-def eeg_filter(raw: Raw, l_freq: float = 1.0, h_freq: float = None) -> Raw:
+def eeg_filter(raw: Raw, l_freq: float = 1.0, h_freq: float = 25.0) -> Raw:
     """
     Bandpass filter on the raw eeg data
 
     Parameters:
     raw (Raw): The raw EEG data.
     l_freq (float): Low frequency cut off parameter. Frequencies below this value will be attenuated in the EEG spectrum.
-    h_freq (float): High frequency cut off parameter. Frequencies above this value will be attenuated in the EEG spectrum.
+    h_freq (float): High frequency cut off parameter. Frequencies above this value will be attenuated in the EEG spectrum. Default is 25.0 Hz (preserves delta to beta bands).
 
 
     Returns:
-    Raw: The EEG data after potential notch filtering.
-    bool: Boolean regarding wether powerline noise was detected and removed.
+    Raw: The EEG data after bandpass filtering.
     """
     filtered_raw = raw.filter(
         l_freq=l_freq,
