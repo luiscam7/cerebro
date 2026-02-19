@@ -1,33 +1,33 @@
-[tool.poetry]
+[project]
 name = "cerebro"
 version = "0.13.0"
 description = "A library for analyzing and visualizing neurological data for the development of Brain computer interfaces and AI-driven application development."
-authors = ["Luis Camargo <lcamargo2007@gmail.com>"]
+authors = [{name = "Luis Camargo", email = "lcamargo2007@gmail.com"}]
 readme = "README.md"
-packages = [{include = "cerebro", from = "src"}]
-license = "MIT"
+license = {text = "MIT"}
+requires-python = ">=3.13"
+dependencies = [
+    "mne>=1.6.0",
+    "numpy>=2.0.0",
+    "pandas>=2.2.0",
+    "scikit-learn>=1.5.0",
+    "fooof>=1.1.0",
+    "neurodsp>=2.3.0",
+    "networkx>=3.3.0",
+    "flask>=3.0.0",
+    "toml>=0.10.2",
+]
 
-
-[tool.poetry.dependencies]
-python = "^3.13"
-mne = "^1.6.0"
-ruff = "^0.9.0"
-flask = "^3.0.0"
-pytest = "^8.0.0"
-pytest-cov = "^5.0.0"
-flask-testing = "^0.8.1"
-numpy = "^2.0.0"
-pandas = "^2.2.0"
-scikit-learn = "^1.5.0"
-toml = "^0.10.2"
-fooof = "^1.1.0"
-neurodsp = "^2.3.0"
-networkx = "^3.3.0"
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.9.0",
+    "pytest>=8.0.0",
+    "pytest-cov>=5.0.0",
+    "flask-testing>=0.8.1",
+]
 
 [tool.pytest.ini_options]
-testpaths = [
-    "tests",
-]
+testpaths = ["tests"]
 
 [tool.ruff]
 target-version = "py313"
@@ -37,7 +37,6 @@ extend-ignore = ["F401"]
 quote-style = "double"
 indent-style = "space"
 
-
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"

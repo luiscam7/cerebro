@@ -23,8 +23,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        uv pip install -e . --no-deps
-        uv pip install ruff pytest pytest-cov mne neurodsp fooof networkx pandas numpy scikit-learn flask toml
+        uv sync --all-extras
 
     - name: Format code with Ruff
       run: |
