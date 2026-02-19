@@ -72,7 +72,7 @@ class BurstAnalysis(QeegAnalysis):
                     "alpha_power_ratio": burst_fraction,
                 })
                 
-            except Exception as e:
+            except Exception:
                 results.append({
                     "channel": channel,
                     "n_bursts": 0,
