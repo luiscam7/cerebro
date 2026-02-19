@@ -35,19 +35,19 @@ class HeartRateAnalysis(QeegAnalysis):
             raise ValueError("No data loaded. Run load_data() first.")
 
         ch_names = self.data.ch_names
-        
+
         # Look for ECG channel
         for ch in ch_names:
             if "ecg" in ch.lower() or "ekg" in ch.lower():
                 self.ecg_channel = ch
                 return ch
-        
+
         # Check for EOG as fallback
         for ch in ch_names:
             if "eog" in ch.lower():
                 self.ecg_channel = ch
                 return ch
-        
+
         return None
 
     def detect_peaks(
@@ -71,16 +71,17 @@ class HeartRateAnalysis(QeegAnalysis):
         """
         # Bandpass filter to isolate QRS
         from mne.filter import filter_data
+
         filtered = filter_data(signal.astype(float), sfreq, 5, 45, method="iir")
-        
+
         # Normalize
         filtered = filtered - np.mean(filtered)
         filtered = filtered / (np.std(filtered) + 1e-10)
-        
+
         # Threshold detection
         threshold_val = threshold * np.max(filtered)
         peaks = np.where(filtered > threshold_val)[0]
-        
+
         # Minimum distance filter
         min_samples = int(min_distance * sfreq)
         if len(peaks) > 1:
@@ -89,7 +90,7 @@ class HeartRateAnalysis(QeegAnalysis):
                 if p - filtered_peaks[-1] >= min_samples:
                     filtered_peaks.append(p)
             peaks = np.array(filtered_peaks)
-        
+
         return peaks
 
     def compute_rr_intervals(
@@ -117,12 +118,12 @@ class HeartRateAnalysis(QeegAnalysis):
 
         sfreq = self.data.info["sfreq"]
         signal = self.data.get_data(picks=[channel]).flatten()
-        
+
         peaks = self.detect_peaks(signal, sfreq, threshold=threshold)
-        
+
         # Compute RR intervals
         rr = np.diff(peaks) / sfreq * 1000  # Convert to ms
-        
+
         self.rr_intervals = rr
         return rr
 
@@ -163,8 +164,8 @@ class HeartRateAnalysis(QeegAnalysis):
             return 0.0
 
         successive_diffs = np.diff(self.rr_intervals)
-        rmssd = np.sqrt(np.mean(successive_diffs ** 2))
-        
+        rmssd = np.sqrt(np.mean(successive_diffs**2))
+
         return rmssd
 
     def compute_sdnn(self) -> float:
@@ -197,7 +198,7 @@ class HeartRateAnalysis(QeegAnalysis):
 
         successive_diffs = np.abs(np.diff(self.rr_intervals))
         nn50 = np.sum(successive_diffs > 50)
-        
+
         return (nn50 / len(successive_diffs)) * 100
 
     def compute_pnn20(self) -> float:
@@ -215,7 +216,7 @@ class HeartRateAnalysis(QeegAnalysis):
 
         successive_diffs = np.abs(np.diff(self.rr_intervals))
         nn20 = np.sum(successive_diffs > 20)
-        
+
         return (nn20 / len(successive_diffs)) * 100
 
     def compute_hrv_frequency(self) -> Dict[str, float]:
@@ -233,27 +234,31 @@ class HeartRateAnalysis(QeegAnalysis):
 
         # Interpolate to evenly spaced time series
         from scipy.interpolate import interp1d
+
         fs = 4  # Resample to 4 Hz
         time = np.cumsum(self.rr_intervals) / 1000
         time = time - time[0]
-        
-        interp_func = interp1d(time, self.rr_intervals, kind="cubic", fill_value="extrapolate")
-        time_regular = np.arange(0, time[-1], 1/fs)
+
+        interp_func = interp1d(
+            time, self.rr_intervals, kind="cubic", fill_value="extrapolate"
+        )
+        time_regular = np.arange(0, time[-1], 1 / fs)
         rr_regular = interp_func(time_regular)
-        
+
         # Compute power spectral density
         from scipy.signal import welch
+
         freqs, psd = welch(rr_regular, fs=fs, nperseg=min(256, len(rr_regular)))
-        
+
         # Define frequency bands
         lf_mask = (freqs >= 0.04) & (freqs < 0.15)
         hf_mask = (freqs >= 0.15) & (freqs < 0.4)
-        
+
         lf_power = np.trapz(psd[lf_mask], freqs[lf_mask])
         hf_power = np.trapz(psd[hf_mask], freqs[hf_mask])
-        
+
         lf_hf_ratio = lf_power / (hf_power + 1e-10)
-        
+
         return {
             "lf": lf_power,
             "hf": hf_power,

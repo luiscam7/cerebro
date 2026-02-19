@@ -6,12 +6,12 @@ from cerebro.utils.params import (
 
 
 def test_ecg_artifact_ica_detection_threshold():
-    assert (
-        0 <= ECG_ARTIFACT_ICA_DETECTION_THRESHOLD <= 1
-    ), "Threshold should be between 0 and 1"
-    assert (
-        ECG_ARTIFACT_ICA_DETECTION_THRESHOLD == 0.75
-    ), "Expected ECG artifact ICA detection threshold is 0.75"
+    assert 0 <= ECG_ARTIFACT_ICA_DETECTION_THRESHOLD <= 1, (
+        "Threshold should be between 0 and 1"
+    )
+    assert ECG_ARTIFACT_ICA_DETECTION_THRESHOLD == 0.75, (
+        "Expected ECG artifact ICA detection threshold is 0.75"
+    )
 
 
 def test_channels_10_20():
@@ -36,9 +36,9 @@ def test_channels_10_20():
         "Cz",
         "Pz",
     ]
-    assert (
-        CHANNELS_10_20 == expected_channels
-    ), "CHANNELS_10_20 does not match the expected 10-20 system channels"
+    assert CHANNELS_10_20 == expected_channels, (
+        "CHANNELS_10_20 does not match the expected 10-20 system channels"
+    )
 
 
 def test_convert_to_10_20():
@@ -63,6 +63,6 @@ def test_convert_to_10_20():
         "Cz": "Cz",
         "Pz": "Pz",
     }
-    assert (
-        CONVERT_TO_10_20 == expected_conversion
-    ), "CONVERT_TO_10_20 does not match the expected channel mapping from 10-10 to 10-20 system"
+    assert CONVERT_TO_10_20 == expected_conversion, (
+        "CONVERT_TO_10_20 does not match the expected channel mapping from 10-10 to 10-20 system"
+    )

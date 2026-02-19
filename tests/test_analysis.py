@@ -107,12 +107,14 @@ class TestPipeline(unittest.TestCase):
     def test_pipeline_import(self):
         """Test pipeline can be imported."""
         from cerebro.pipeline import CerebroPipeline, run_pipeline
+
         self.assertTrue(callable(CerebroPipeline))
         self.assertTrue(callable(run_pipeline))
 
     def test_pipeline_init(self):
         """Test pipeline initialization."""
         from cerebro.pipeline import CerebroPipeline
+
         p = CerebroPipeline()
         self.assertIsNotNone(p.qeeg)
         self.assertIsNotNone(p.burst)
@@ -145,7 +147,7 @@ class TestHeartAnalysis(unittest.TestCase):
         sfreq = 256
         t = np.linspace(0, 10, sfreq * 10)
         signal = np.sin(2 * np.pi * 1 * t) + 0.1 * np.random.randn(len(t))
-        
+
         peaks = h.detect_peaks(signal, sfreq, threshold=0.5)
         # Should detect approximately 10 peaks
         self.assertGreater(len(peaks), 5)

@@ -1,11 +1,12 @@
 """
-Cerebro is a central class designed for efficient parsing and preprocessing of EEG data, 
-facilitating rapid research and development in neurological data analysis and application development. 
-Leveraging the power of MNE-Python, Cerebro offers a streamlined approach to handling EEG datasets from 
-various sources, providing essential functionalities for data loading, preprocessing, and analysis. 
-Its modular design caters to the needs of EEG data analysts, researchers, and clinicians, 
+Cerebro is a central class designed for efficient parsing and preprocessing of EEG data,
+facilitating rapid research and development in neurological data analysis and application development.
+Leveraging the power of MNE-Python, Cerebro offers a streamlined approach to handling EEG datasets from
+various sources, providing essential functionalities for data loading, preprocessing, and analysis.
+Its modular design caters to the needs of EEG data analysts, researchers, and clinicians,
 accelerating the transition from raw data to insightful neurological interpretations.
 """
+
 import json
 import numpy as np
 from dataclasses import dataclass

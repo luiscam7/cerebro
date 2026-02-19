@@ -1,6 +1,7 @@
-""" 
+"""
 A collection of functions pertaining to processing EEG data for the removal of signal contamination from movement, muscle tension, and other sources of non-neurological signals.
 """
+
 import logging
 
 import numpy as np

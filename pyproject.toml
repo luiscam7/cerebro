@@ -33,9 +33,6 @@ testpaths = ["tests"]
 [tool.ruff]
 extend-ignore = ["F401"]
 
-[tool.ruff.lint]
-target-version = "py313"
-
 [tool.ruff.format]
 quote-style = "double"
 indent-style = "space"

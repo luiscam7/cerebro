@@ -81,7 +81,7 @@ class ConnectivityAnalysis(SpectralAnalysis):
         measures = {
             "degree": dict(G.degree(weight="weight")),
             "betweenness_centrality": nx.betweenness_centrality(G, weight="weight"),
-            "closeness_centrality": nx.closeness_centrality(G, distance="weight")
+            "closeness_centrality": nx.closeness_centrality(G, distance="weight"),
             # Add other measures as needed
         }
 
@@ -90,7 +90,7 @@ class ConnectivityAnalysis(SpectralAnalysis):
     def analyze_data(self) -> Dict:
         super().analyze_data()
         self.analysis["coherence"] = self.calculate_all_coherence()
-        self.analysis[
-            "median_frontal_coherence"
-        ] = self.calculate_median_frontal_coherence()
+        self.analysis["median_frontal_coherence"] = (
+            self.calculate_median_frontal_coherence()
+        )
         self.analysis["graph_measures"] = self.build_and_analyze_graph()

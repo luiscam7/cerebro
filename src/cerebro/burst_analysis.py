@@ -41,15 +41,15 @@ class BurstAnalysis(QeegAnalysis):
 
         # Get sampling frequency
         sf = self.data.info["sfreq"]
-        
+
         # Get data as numpy array
         eeg_data = self.data.get_data(picks="eeg")
-        
+
         results = []
 
         for idx, channel in enumerate(CHANNELS_10_20):
             signal = eeg_data[idx]
-            
+
             # Compute burst detection using dual threshold gradient
             try:
                 bursts = burst.compute_bursts_dual_threshold(
@@ -59,33 +59,37 @@ class BurstAnalysis(QeegAnalysis):
                     threshold_2ndDeriv=threshold_2ndDeriv,
                     min_cycle_above_thresh=min_cycle_above_thresh,
                 )
-                
+
                 n_bursts = len(bursts["burst_inds"])
                 burst_fraction = bursts["burst_fraction"]
                 n_cycles = bursts["n_cycles"]
-                
-                results.append({
-                    "channel": channel,
-                    "n_bursts": n_bursts,
-                    "burst_fraction": burst_fraction,
-                    "n_cycles": n_cycles,
-                    "alpha_power_ratio": burst_fraction,
-                })
-                
+
+                results.append(
+                    {
+                        "channel": channel,
+                        "n_bursts": n_bursts,
+                        "burst_fraction": burst_fraction,
+                        "n_cycles": n_cycles,
+                        "alpha_power_ratio": burst_fraction,
+                    }
+                )
+
             except Exception:
-                results.append({
-                    "channel": channel,
-                    "n_bursts": 0,
-                    "burst_fraction": 0.0,
-                    "n_cycles": 0,
-                    "alpha_power_ratio": 0.0,
-                })
+                results.append(
+                    {
+                        "channel": channel,
+                        "n_bursts": 0,
+                        "burst_fraction": 0.0,
+                        "n_cycles": 0,
+                        "alpha_power_ratio": 0.0,
+                    }
+                )
 
         self.burst_results = pd.DataFrame(results)
-        
+
         # Calculate statistics
         self.analysis["alpha_bursts"] = self.burst_results.to_dict(orient="records")
-        
+
         return self.burst_results
 
     def analyze_data(self) -> Dict:

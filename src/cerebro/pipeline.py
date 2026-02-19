@@ -22,7 +22,7 @@ from cerebro.io.writer import dict_to_json
 class CerebroPipeline:
     """
     Consolidated pipeline that runs all EEG analyses.
-    
+
     Usage:
         pipeline = CerebroPipeline()
         pipeline.load_data("path/to/eegfile.set")
@@ -76,14 +76,14 @@ class CerebroPipeline:
     ) -> Dict:
         """
         Run all selected analyses.
-        
+
         Parameters:
             run_qeeg: Compute power spectral metrics.
             run_bursts: Detect alpha bursts.
             run_complexity: Compute complexity features.
             run_connectivity: Compute connectivity metrics.
             run_heart: Compute heart rate and HRV.
-            
+
         Returns:
             Dictionary with all results.
         """
@@ -91,10 +91,16 @@ class CerebroPipeline:
             self.results["qeeg"] = self.qeeg.analyze_data()
 
         if run_bursts:
-            self.results["bursts"] = self.burst.detect_alpha_bursts().to_dict(orient="records")
+            self.results["bursts"] = self.burst.detect_alpha_bursts().to_dict(
+                orient="records"
+            )
 
         if run_complexity:
-            self.results["complexity"] = self.complexity.compute_complexity_all_channels().to_dict(orient="records")
+            self.results["complexity"] = (
+                self.complexity.compute_complexity_all_channels().to_dict(
+                    orient="records"
+                )
+            )
 
         if run_connectivity:
             self.results["connectivity"] = self.connectivity.calculate_all_coherence()
@@ -111,34 +117,43 @@ class CerebroPipeline:
     def get_summary(self) -> Dict:
         """Get a summary of all results."""
         summary = {}
-        
+
         if "qeeg" in self.results:
             summary["qeeg"] = {
                 "n_channels": self.results["qeeg"].get("n_channels", 0),
                 "bands": list(self.results["qeeg"].get("absolute_power", {}).keys()),
             }
-        
+
         if "bursts" in self.results:
             burst_df = self.results["bursts"]
             summary["bursts"] = {
                 "total_bursts": sum(b.get("n_bursts", 0) for b in burst_df),
-                "avg_burst_fraction": sum(b.get("burst_fraction", 0) for b in burst_df) / len(burst_df) if burst_df else 0,
+                "avg_burst_fraction": sum(b.get("burst_fraction", 0) for b in burst_df)
+                / len(burst_df)
+                if burst_df
+                else 0,
             }
-        
+
         if "complexity" in self.results:
             summary["complexity"] = {
                 "n_channels": len(self.results["complexity"]),
-                "features": ["sample_entropy", "approximate_entropy", "hurst_exponent", 
-                            "fractal_dimension", "lempel_ziv_complexity", "dfa_alpha", 
-                            "permutation_entropy"],
+                "features": [
+                    "sample_entropy",
+                    "approximate_entropy",
+                    "hurst_exponent",
+                    "fractal_dimension",
+                    "lempel_ziv_complexity",
+                    "dfa_alpha",
+                    "permutation_entropy",
+                ],
             }
-        
+
         if "connectivity" in self.results:
             summary["connectivity"] = {
                 "bands": list(self.results["connectivity"].keys()),
                 "metrics": ["wpli", "coherence", "psi"],
             }
-        
+
         return summary
 
 
@@ -151,23 +166,25 @@ def run_pipeline(
 ) -> Dict:
     """
     Convenience function to run the full pipeline.
-    
+
     Parameters:
         file_path: Path to EEG file.
         output_path: Optional path to save JSON results.
         l_freq: Low frequency for bandpass filter.
         h_freq: High frequency for bandpass filter.
         remove_powerline: Whether to remove powerline noise.
-        
+
     Returns:
         Dictionary with all analysis results.
     """
     pipeline = CerebroPipeline()
     pipeline.load_data(file_path)
-    pipeline.preprocess_data(l_freq=l_freq, h_freq=h_freq, remove_powerline=remove_powerline)
+    pipeline.preprocess_data(
+        l_freq=l_freq, h_freq=h_freq, remove_powerline=remove_powerline
+    )
     results = pipeline.run_full_analysis()
-    
+
     if output_path:
         pipeline.save_results(output_path)
-    
+
     return results

@@ -208,13 +208,13 @@ class QeegAnalysis(Cerebro):
         )
 
         self.analysis["frontal_alpha_relative_power"] = frontal_alpha_relative_power
-        self.analysis[
-            "posterior_alpha__relative_power"
-        ] = posterior_alpha_relative_power
+        self.analysis["posterior_alpha__relative_power"] = (
+            posterior_alpha_relative_power
+        )
 
-        self.analysis[
-            "frontal_posterior_relative_power_ratio"
-        ] = frontal_posterior_power_ratio
+        self.analysis["frontal_posterior_relative_power_ratio"] = (
+            frontal_posterior_power_ratio
+        )
         self.analysis["frontal_generator"] = False
 
         if frontal_posterior_power_ratio >= FRONTAL_GENERATOR_THRESHOLD:
