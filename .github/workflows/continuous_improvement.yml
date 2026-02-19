@@ -23,7 +23,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        uv sync --all-extras
+        uv sync --all-extras --editable
 
     - name: Install ruff
       run: |
