@@ -18,7 +18,7 @@ dependencies = [
     "toml>=0.10.2",
     "bycycle>=1.0.0",
     "pyts>=1.0.0",
-    "nentropy>=1.0.0",
+    "scipy>=1.11.0",
 ]
 
 [project.optional-dependencies]
