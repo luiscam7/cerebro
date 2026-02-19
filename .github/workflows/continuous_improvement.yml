@@ -23,15 +23,15 @@ jobs:
 
     - name: Install dependencies
       run: |
-        uv sync
+        uv sync --all-extras
 
     - name: Format code with Ruff
       run: |
-        uv run ruff format src/ tests/
+        uvx ruff format src/ tests/
 
     - name: Lint with Ruff
       run: |
-        uv run ruff check src/ tests/
+        uvx ruff check src/ tests/
 
     - name: Run tests
       run: |
