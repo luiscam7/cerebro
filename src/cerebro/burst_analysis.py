@@ -3,8 +3,8 @@
 import pandas as pd
 import numpy as np
 from typing import Dict, List
-from cerebro.qeeg import QeegAnalysis
-from cerebro.utils.params import CHANNELS_10_20, ALPHA_BAND
+from .qeeg import QeegAnalysis
+from .utils.params import CHANNELS_10_20, ALPHA_BAND
 from neurodsp import burst
 
 

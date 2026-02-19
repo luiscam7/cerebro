@@ -12,15 +12,15 @@ import numpy as np
 from dataclasses import dataclass
 from datetime import datetime
 from mne.io import Raw
-from cerebro.base import ICerebro
-from cerebro.version import __version__
-from cerebro.parser import ChbmpParser, TuhParser, TdbrainParser
-from cerebro.preprocessing import (
+from .base import ICerebro
+from .version import __version__
+from .parser import ChbmpParser, TuhParser, TdbrainParser
+from .preprocessing import (
     eeg_filter,
     remove_powerline_noise,
     remove_ecg_interference,
 )
-from cerebro.utils.writers import dict_to_json
+from .utils.writers import dict_to_json
 from typing import Dict
 
 

@@ -1,6 +1,6 @@
 from mne.io import Raw
-from cerebro.parser import BrainvisionParser
-from cerebro.utils.params import (
+from . import BrainvisionParser
+from ..utils.params import (
     CHANNELS_10_20,
     TDBRAIN_CHANNEL_MAPPING,
 )

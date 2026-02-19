@@ -1,6 +1,6 @@
 import mne
 from mne.io import Raw
-from cerebro.base.parser import Parser
+from ..base.parser import Parser
 
 
 class BrainvisionParser(Parser):

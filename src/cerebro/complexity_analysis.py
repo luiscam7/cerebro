@@ -14,8 +14,8 @@ import numpy as np
 import pandas as pd
 import math
 from typing import Dict, List
-from cerebro.qeeg import QeegAnalysis
-from cerebro.utils.params import CHANNELS_10_20
+from .qeeg import QeegAnalysis
+from .utils.params import CHANNELS_10_20
 
 
 class ComplexityAnalysis(QeegAnalysis):

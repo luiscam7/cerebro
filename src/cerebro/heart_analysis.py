@@ -10,8 +10,8 @@ Metrics:
 import numpy as np
 import pandas as pd
 from typing import Dict, List, Optional, Tuple
-from cerebro.qeeg import QeegAnalysis
-from cerebro.utils.params import CHANNELS_10_20
+from .qeeg import QeegAnalysis
+from .utils.params import CHANNELS_10_20
 
 
 class HeartRateAnalysis(QeegAnalysis):

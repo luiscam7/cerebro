@@ -1,8 +1,8 @@
 import re
 import logging
-from cerebro.parser import EdfParser
+from . import EdfParser
 from mne.io import Raw
-from cerebro.utils.params import CHANNELS_10_20
+from ..utils.params import CHANNELS_10_20
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"

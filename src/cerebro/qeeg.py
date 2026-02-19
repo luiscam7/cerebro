@@ -4,8 +4,8 @@ import numpy as np
 import pandas as pd
 from numpy.typing import NDArray
 
-from cerebro.cerebro import Cerebro
-from cerebro.utils.params import (
+from .core import Cerebro
+from .utils.params import (
     CHANNELS_10_20,
     DELTA_BAND,
     THETA_BAND,

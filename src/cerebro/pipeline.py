@@ -11,11 +11,11 @@ import json
 from typing import Dict, Optional
 from pathlib import Path
 
-from cerebro.qeeg import QeegAnalysis
-from cerebro.burst_analysis import BurstAnalysis
-from cerebro.complexity_analysis import ComplexityAnalysis
-from cerebro.connectivity import ConnectivityAnalysis
-from cerebro.heart_analysis import HeartRateAnalysis
+from .qeeg import QeegAnalysis
+from .burst_analysis import BurstAnalysis
+from .complexity_analysis import ComplexityAnalysis
+from .connectivity import ConnectivityAnalysis
+from .heart_analysis import HeartRateAnalysis
 
 
 class CerebroPipeline:

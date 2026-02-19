@@ -1,6 +1,6 @@
-from cerebro.parser import EdfParser
+from . import EdfParser
 from mne.io import Raw
-from cerebro.utils.params import (
+from ..utils.params import (
     CHANNELS_10_20,
     CONVERT_TO_10_20,
 )

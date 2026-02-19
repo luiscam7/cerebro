@@ -5,7 +5,7 @@ A collection of functions pertaining to processing EEG data for the removal of s
 import logging
 
 import numpy as np
-from cerebro.utils.params import ECG_ARTIFACT_ICA_DETECTION_THRESHOLD
+from .utils.params import ECG_ARTIFACT_ICA_DETECTION_THRESHOLD
 from mne.io import Raw
 from typing import Tuple
 from mne.preprocessing import ICA, create_ecg_epochs
