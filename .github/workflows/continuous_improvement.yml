@@ -25,18 +25,22 @@ jobs:
       run: |
         uv sync --all-extras
 
+    - name: Install ruff
+      run: |
+        uv tool install ruff
+
     - name: Format code with Ruff
       run: |
-        uvx ruff format src/ tests/
+        uv tool run ruff format src/ tests/
 
     - name: Lint with Ruff
       run: |
-        uvx ruff check src/ tests/
+        uv tool run ruff check src/ tests/
 
     - name: Run tests
       run: |
-        uvx pytest
+        uv run pytest
 
     - name: Coverage report
       run: |
-        uvx pytest --cov=cerebro
+        uv run pytest --cov=cerebro
