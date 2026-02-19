@@ -16,7 +16,6 @@ from cerebro.burst_analysis import BurstAnalysis
 from cerebro.complexity_analysis import ComplexityAnalysis
 from cerebro.connectivity import ConnectivityAnalysis
 from cerebro.heart_analysis import HeartRateAnalysis
-from cerebro.io.writer import dict_to_json
 
 
 class CerebroPipeline:
@@ -112,7 +111,8 @@ class CerebroPipeline:
 
     def save_results(self, output_path: str) -> None:
         """Save results to JSON file."""
-        dict_to_json(self.results, output_path)
+        with open(output_path, "w") as f:
+            json.dump(self.results, f, indent=2)
 
     def get_summary(self) -> Dict:
         """Get a summary of all results."""

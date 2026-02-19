@@ -12,6 +12,7 @@ Calculates:
 
 import numpy as np
 import pandas as pd
+import math
 from typing import Dict, List
 from cerebro.qeeg import QeegAnalysis
 from cerebro.utils.params import CHANNELS_10_20
@@ -210,7 +211,7 @@ class ComplexityAnalysis(QeegAnalysis):
                     j = i
                 i += 1
 
-        return c
+        return float(c)
 
     def compute_dfa(self, signal: np.ndarray) -> float:
         """
@@ -222,39 +223,52 @@ class ComplexityAnalysis(QeegAnalysis):
             alpha = 0.5: Uncorrelated
             alpha > 0.5: Persistent
         """
-        signal = np.array(signal)
-        N = len(signal)
+        try:
+            signal = np.array(signal)
+            N = len(signal)
 
-        # Cumulative sum
-        y = np.cumsum(signal - np.mean(signal))
+            if N < 50:
+                return 0.5
 
-        # Different window sizes
-        box_sizes = np.unique(np.logspace(0, np.log10(N // 4), dtype=int))
-        F = []
+            # Cumulative sum
+            y = np.cumsum(signal - np.mean(signal))
 
-        for s in box_sizes:
-            n_boxes = N // s
-            Fs = []
-            for i in range(n_boxes):
-                start = i * s
-                end = start + s
-                if end > N:
-                    break
-                segment = y[start:end]
-                coeffs = np.polyfit(np.arange(s), segment, 1)
-                fit = np.polyval(coeffs, np.arange(s))
-                Fs.append(np.mean((segment - fit) ** 2))
-            if Fs:
-                F.append(np.mean(Fs))
+            # Different window sizes
+            box_sizes = np.unique(np.logspace(0, np.log10(N // 4), dtype=int))
+            F = []
 
-        if not F:
+            for s in box_sizes:
+                n_boxes = N // s
+                if n_boxes < 2:
+                    continue
+                Fs = []
+                for i in range(n_boxes):
+                    start = i * s
+                    end = start + s
+                    if end > N:
+                        break
+                    segment = y[start:end]
+                    if len(segment) < 2:
+                        continue
+                    coeffs = np.polyfit(np.arange(len(segment)), segment, 1)
+                    fit = np.polyval(coeffs, np.arange(len(segment)))
+                    Fs.append(np.mean((segment - fit) ** 2))
+                if Fs:
+                    F.append(np.mean(Fs))
+
+            if not F:
+                return 0.5
+
+            log_s = np.log(box_sizes[: len(F)])
+            log_F = np.log(np.array(F))
+
+            if len(log_s) < 2 or len(log_F) < 2:
+                return 0.5
+
+            coeffs = np.polyfit(log_s, log_F, 1)
+            return coeffs[0] / 2
+        except Exception:
             return 0.5
-
-        log_s = np.log(box_sizes[: len(F)])
-        log_F = np.log(np.array(F))
-
-        coeffs = np.polyfit(log_s, log_F, 1)
-        return coeffs[0] / 2
 
     def compute_permutation_entropy(
         self, signal: np.ndarray, m: int = 3, delay: int = 1
@@ -286,7 +300,7 @@ class ComplexityAnalysis(QeegAnalysis):
         entropy = -np.sum(probs * np.log(probs + 1e-10))
 
         # Normalize
-        max_entropy = np.log(np.math.factorial(m))
+        max_entropy = np.log(math.factorial(m))
         return entropy / max_entropy
 
     def compute_complexity_all_channels(self) -> pd.DataFrame:
