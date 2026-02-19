@@ -1,5 +1,7 @@
 # Cerebro AI & Analytics Platform Project
 [![Lint, Format, Testing](https://github.com/luiscam7/cerebro/actions/workflows/continuous_improvement.yml/badge.svg)](https://github.com/luiscam7/cerebro/actions/workflows/continuous_improvement.yml)
+[![Python Version](https://img.shields.io/badge/python-3.13+-blue)](https://www.python.org/)
+[![Coverage](https://img.shields.io/badge/coverage-80%25-green)](https://github.com/luiscam7/cerebro/actions)
 
 ![Alternative Text](https://images.theconversation.com/files/374303/original/file-20201210-18-elk4m.jpg?ixlib=rb-1.1.0&rect=0%2C22%2C7500%2C5591&q=45&auto=format&w=926&fit=clip)
 
