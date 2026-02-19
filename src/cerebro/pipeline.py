@@ -15,6 +15,7 @@ from cerebro.qeeg import QeegAnalysis
 from cerebro.burst_analysis import BurstAnalysis
 from cerebro.complexity_analysis import ComplexityAnalysis
 from cerebro.connectivity import ConnectivityAnalysis
+from cerebro.heart_analysis import HeartRateAnalysis
 from cerebro.io.writer import dict_to_json
 
 
@@ -35,6 +36,7 @@ class CerebroPipeline:
         self.burst = BurstAnalysis()
         self.complexity = ComplexityAnalysis()
         self.connectivity = ConnectivityAnalysis()
+        self.heart = HeartRateAnalysis()
         self.results = {}
 
     def load_data(self, file_path: str) -> None:
@@ -43,6 +45,7 @@ class CerebroPipeline:
         self.burst.set_raw(self.qeeg.data)
         self.complexity.set_raw(self.qeeg.data)
         self.connectivity.set_raw(self.qeeg.data)
+        self.heart.set_raw(self.qeeg.data)
 
     def preprocess_data(
         self,
@@ -61,6 +64,7 @@ class CerebroPipeline:
             self.burst.data = self.qeeg.data
             self.complexity.data = self.qeeg.data
             self.connectivity.data = self.qeeg.data
+            self.heart.data = self.qeeg.data
 
     def run_full_analysis(
         self,
@@ -68,6 +72,7 @@ class CerebroPipeline:
         run_bursts: bool = True,
         run_complexity: bool = True,
         run_connectivity: bool = True,
+        run_heart: bool = True,
     ) -> Dict:
         """
         Run all selected analyses.
@@ -77,6 +82,7 @@ class CerebroPipeline:
             run_bursts: Detect alpha bursts.
             run_complexity: Compute complexity features.
             run_connectivity: Compute connectivity metrics.
+            run_heart: Compute heart rate and HRV.
             
         Returns:
             Dictionary with all results.
@@ -91,7 +97,10 @@ class CerebroPipeline:
             self.results["complexity"] = self.complexity.compute_complexity_all_channels().to_dict(orient="records")
 
         if run_connectivity:
-            self.results["connectivity"] = self.connectivity.compute_connectivity_all_bands()
+            self.results["connectivity"] = self.connectivity.calculate_all_coherence()
+
+        if run_heart:
+            self.results["heart_rate"] = self.heart.compute_all_hrv()
 
         return self.results
 

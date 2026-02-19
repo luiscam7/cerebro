@@ -3,6 +3,7 @@ import numpy as np
 from cerebro.burst_analysis import BurstAnalysis
 from cerebro.complexity_analysis import ComplexityAnalysis
 from cerebro.connectivity import ConnectivityAnalysis
+from cerebro.heart_analysis import HeartRateAnalysis
 from cerebro.preprocessing import eeg_filter
 
 
@@ -117,7 +118,81 @@ class TestPipeline(unittest.TestCase):
         self.assertIsNotNone(p.burst)
         self.assertIsNotNone(p.complexity)
         self.assertIsNotNone(p.connectivity)
+        self.assertIsNotNone(p.heart)
         self.assertEqual(p.results, {})
+
+
+class TestHeartAnalysis(unittest.TestCase):
+    """Test heart rate analysis."""
+
+    def test_heart_analysis_init(self):
+        """Test heart analysis initialization."""
+        h = HeartRateAnalysis()
+        self.assertIsNone(h.data)
+        self.assertIsNone(h.ecg_channel)
+        self.assertIsNone(h.heart_rate)
+        self.assertIsNone(h.rr_intervals)
+
+    def test_set_raw(self):
+        """Test set_raw method."""
+        h = HeartRateAnalysis()
+        self.assertIsNone(h.data)
+
+    def test_detect_peaks(self):
+        """Test R-peak detection."""
+        h = HeartRateAnalysis()
+        # Simulate ECG signal with peaks at 1Hz, sampling at 256Hz
+        sfreq = 256
+        t = np.linspace(0, 10, sfreq * 10)
+        signal = np.sin(2 * np.pi * 1 * t) + 0.1 * np.random.randn(len(t))
+        
+        peaks = h.detect_peaks(signal, sfreq, threshold=0.5)
+        # Should detect approximately 10 peaks
+        self.assertGreater(len(peaks), 5)
+        self.assertLess(len(peaks), 15)
+
+    def test_compute_rmssd(self):
+        """Test RMSSD calculation."""
+        h = HeartRateAnalysis()
+        # Normal RR intervals ~700-900ms with some variation
+        h.rr_intervals = np.array([800, 850, 780, 820, 810])
+        rmssd = h.compute_rmssd()
+        self.assertIsInstance(rmssd, float)
+        self.assertGreater(rmssd, 0)
+
+    def test_compute_sdnn(self):
+        """Test SDNN calculation."""
+        h = HeartRateAnalysis()
+        h.rr_intervals = np.array([800, 850, 780, 820, 810])
+        sdnn = h.compute_sdnn()
+        self.assertIsInstance(sdnn, float)
+        self.assertGreater(sdnn, 0)
+
+    def test_compute_pnn50(self):
+        """Test pNN50 calculation."""
+        h = HeartRateAnalysis()
+        h.rr_intervals = np.array([800, 850, 780, 820, 810])
+        pnn50 = h.compute_pnn50()
+        self.assertIsInstance(pnn50, float)
+        self.assertGreaterEqual(pnn50, 0)
+        self.assertLessEqual(pnn50, 100)
+
+    def test_compute_pnn20(self):
+        """Test pNN20 calculation."""
+        h = HeartRateAnalysis()
+        h.rr_intervals = np.array([800, 850, 780, 820, 810])
+        pnn20 = h.compute_pnn20()
+        self.assertIsInstance(pnn20, float)
+        self.assertGreaterEqual(pnn20, 0)
+        self.assertLessEqual(pnn20, 100)
+
+    def test_compute_heart_rate(self):
+        """Test heart rate calculation."""
+        h = HeartRateAnalysis()
+        # RR interval of 1000ms = 60 BPM
+        h.rr_intervals = np.array([1000] * 10)
+        hr = h.compute_heart_rate()
+        self.assertAlmostEqual(hr, 60, delta=5)
 
 
 if __name__ == "__main__":
