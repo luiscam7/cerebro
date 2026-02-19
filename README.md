@@ -1,4 +1,4 @@
-# Cerebro AI & Analytics Platform Project
+# Cerebro 
 [![Lint, Format, Testing](https://github.com/luiscam7/cerebro/actions/workflows/continuous_improvement.yml/badge.svg)](https://github.com/luiscam7/cerebro/actions/workflows/continuous_improvement.yml)
 [![Python Version](https://img.shields.io/badge/python-3.13+-blue)](https://www.python.org/)
 [![Coverage](https://img.shields.io/badge/coverage-80%25-green)](https://github.com/luiscam7/cerebro/actions)
