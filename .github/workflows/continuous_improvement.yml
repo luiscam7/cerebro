@@ -11,37 +11,32 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
 
-    - name: Set up Python 3.11
-      uses: actions/setup-python@v2
+    - name: Set up Python
+      uses: actions/setup-python@v5
       with:
-        python-version: '3.11'
+        python-version: '3.13'
 
-    - name: Install Poetry
-      run: |
-        curl -sSL https://install.python-poetry.org | python -
+    - name: Install UV
+      uses: astral-sh/setup-uv@v4
 
-    - name: Configure Poetry
+    - name: Install dependencies
       run: |
-        poetry config virtualenvs.create false
+        uv sync
 
-    - name: Install dependencies with Poetry
+    - name: Format code with Ruff
       run: |
-        poetry install
-
-    - name: Format code with Black
-      run: |
-        poetry run black src/ tests/
+        uv run ruff format src/ tests/
 
     - name: Lint with Ruff
       run: |
-        poetry run ruff .
+        uv run ruff check src/ tests/
 
     - name: Run tests
       run: |
-        poetry run pytest
+        uv run pytest
 
     - name: Coverage report
       run: |
-        poetry run pytest --cov=cerebro
+        uv run pytest --cov=cerebro
