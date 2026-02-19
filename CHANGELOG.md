@@ -125,7 +125,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.1.0] - 2023-11-22
 ### Added
-- Created project scaffold and project requirements using Poetry.
+- Created project scaffold and project requirements using UV.
 - Create Makefile to streamline lint, formatting, and test commands.
 - Create abstract base classes for Cerebro and Parser objects.
 
