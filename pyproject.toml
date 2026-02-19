@@ -16,8 +16,6 @@ dependencies = [
     "networkx>=3.3.0",
     "flask>=3.0.0",
     "toml>=0.10.2",
-    "bycycle>=1.0.0",
-    "pyts>=1.0.0",
     "scipy>=1.11.0",
 ]
 

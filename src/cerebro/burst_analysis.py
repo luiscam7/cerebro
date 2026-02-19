@@ -1,4 +1,4 @@
-"""Alpha burst detection using bycycle."""
+"""Alpha burst detection using neurodsp."""
 
 import pandas as pd
 import numpy as np
@@ -9,7 +9,7 @@ from neurodsp import burst
 
 
 class BurstAnalysis(QeegAnalysis):
-    """Detect alpha bursts across EEG channels using bycycle."""
+    """Detect alpha bursts across EEG channels using neurodsp."""
 
     def __init__(self):
         super().__init__()
@@ -69,7 +69,7 @@ class BurstAnalysis(QeegAnalysis):
                     "n_bursts": n_bursts,
                     "burst_fraction": burst_fraction,
                     "n_cycles": n_cycles,
-                    "alpha_power_ratio": burst_fraction,  # proxy for alpha burst %
+                    "alpha_power_ratio": burst_fraction,
                 })
                 
             except Exception as e:
