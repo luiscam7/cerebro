@@ -35,8 +35,8 @@ jobs:
 
     - name: Run tests
       run: |
-        uv run pytest
+        uvx pytest
 
     - name: Coverage report
       run: |
-        uv run pytest --cov=cerebro
+        uvx pytest --cov=cerebro
