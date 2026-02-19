@@ -9,7 +9,7 @@ license = "MIT"
 
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "^3.13"
 mne = "^1.6.0"
 ruff = "^0.1.6"
 black = "^23.11.0"
