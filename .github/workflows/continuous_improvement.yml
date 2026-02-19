@@ -25,10 +25,6 @@ jobs:
       run: |
         uv sync
 
-    - name: Format code with Ruff
-      run: |
-        uv run ruff format src/ tests/
-
     - name: Lint with Ruff
       run: |
         uv run ruff check src/ tests/
