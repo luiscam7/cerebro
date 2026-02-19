@@ -14,6 +14,11 @@ class BurstAnalysis(QeegAnalysis):
     def __init__(self):
         super().__init__()
         self.burst_results = None
+        self.data = None
+
+    def set_raw(self, raw):
+        """Set raw EEG data directly."""
+        self.data = raw
 
     def detect_alpha_bursts(
         self,

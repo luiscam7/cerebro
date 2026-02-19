@@ -10,6 +10,11 @@ class ConnectivityAnalysis(SpectralAnalysis):
     def __init__(self):
         super().__init__()
         self.frontal_channels = STABLE_FRONTAL_SENSORS
+        self.data = None
+
+    def set_raw(self, raw):
+        """Set raw EEG data directly."""
+        self.data = raw
 
     def calculate_all_coherence(self):
         data, times = self.data[:]

@@ -23,6 +23,11 @@ class ComplexityAnalysis(QeegAnalysis):
     def __init__(self):
         super().__init__()
         self.complexity_results = None
+        self.data = None
+
+    def set_raw(self, raw):
+        """Set raw EEG data directly."""
+        self.data = raw
 
     def compute_sample_entropy(self, signal: np.ndarray, m: int = 2, r: float = 0.2) -> float:
         """
