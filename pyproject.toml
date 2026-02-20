@@ -30,9 +30,6 @@ dev = [
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 
-[tool.setuptools.packages.find]
-where = ["src"]
-
 [tool.ruff]
 extend-ignore = ["F401"]
 
@@ -43,3 +40,7 @@ indent-style = "space"
 [build-system]
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = {"cerebro" = "src", "cerebro.base" = "src/base", "cerebro.parser" = "src/parser", "cerebro.utils" = "src/utils"}
+packages = ["cerebro", "cerebro.base", "cerebro.parser", "cerebro.utils"]
